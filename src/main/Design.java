@@ -43,13 +43,14 @@ public class Design extends JFrame {
     JLabel label2 = null;
     JLabel label3 = null;
 
-    int zahler = 0;						//#3
+    int zahler = 0;                             //#3
     private int x_Achse = 5;			//#4
     private int y_Achse = 5;			//#5
+    int number;
 
 ///Standardkonsruktor	
     public Design() throws InterruptedException {
-    ///JFrame ...
+        ///JFrame ...
         //main frame
         super("Set");
         this.setLayout(null);
@@ -67,9 +68,7 @@ public class Design extends JFrame {
         this.frame_player1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		this.frame_player1.setVisible(true);
 
-      
-
-    ///JPanel ...
+        ///JPanel ...
         //Hier werden JPanels erstellt und gleichzeit an MausListener registriert
         this.createJPanels();
         //JPanels zum Frame hinzufügen
@@ -108,7 +107,6 @@ public class Design extends JFrame {
             }
 
             JPanelList.get(i).setBounds(x_Achse, y_Achse, 100, 220);
-            System.out.println("Breite: " + this.getWidth());
             JPanelList.get(i).setBackground(Color.WHITE);
 
             this.add(JPanelList.get(i));
@@ -116,14 +114,27 @@ public class Design extends JFrame {
             this.setSize(this.getWidth() + 1, this.getHeight() + 1);					//JFrame ändert sich je nach Bedarf
             this.validate();
 
-//			Thread.sleep(500);
             new Deck();
-            System.out.println(JPanelList.get(i).getName() + " " + JPanelList.get(i).getX());
-            System.out.println(Deck.displayed.get(8).getIcon());
-            JPanelList.get(i).add(new JLabel(new ImageIcon(Deck.displayed.get(8).getIcon())));
-            // JPanelList.get(i).add(new JLabel(IconList.get(6)));
-//			JPanelList.get(i).add(new JLabel(IconList.get(13)));
-//			JPanelList.get(i).add(new JLabel(IconList.get(14)));
+
+            number = Integer.parseInt(Deck.displayed.get(i).getNumber());
+            switch (number) {
+                case 1:
+                    System.out.println("1");
+                    JPanelList.get(i).add(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
+                    break;
+                case 2:
+                    System.out.println("2");
+                    JPanelList.get(i).add(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
+                    JPanelList.get(i).add(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
+                    break;
+                case 3:
+                    System.out.println("3");
+                    JPanelList.get(i).add(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
+                    JPanelList.get(i).add(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
+                    JPanelList.get(i).add(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
+                    break;
+            }
+
             x_Achse += 105;														//#6
 
         }//for(int i;...;...) closing
