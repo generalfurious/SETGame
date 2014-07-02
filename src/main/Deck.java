@@ -22,6 +22,8 @@ public class Deck { // Responsible for the deck of cards and the cards which are
         addCards(12); //Create the deck that is going to be displayed
         fillDeck();
         
+        System.out.println(displayed.get(0).getIcon());
+        
     }
    
     public void createDeck(){    // Create the 81 Cards with each number, shade, symbol and color
@@ -77,11 +79,11 @@ public class Deck { // Responsible for the deck of cards and the cards which are
         }
     }
     
-    public static void removeCard(Card card){
+    public static void removeCard(Card card){ //Removes a Card
         displayed.remove(card);
     }
     
-    public static void fillDeck(){
+    public static void fillDeck(){ // Fills the deck if there is no Set or if there are less than 12 Cards
         while(!isSetAvailable() || displayed.size() < 12 && deck.size() >= 3){
             addCards(3);
         }

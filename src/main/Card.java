@@ -9,7 +9,7 @@ public class Card {
         this.symbol = whatSymbol(symbol);
         this.shade = whatShade(shade);
         this.color = whatColor(color);
-        this.icon = "cards\\" + this.number + "-" + this.symbol +  "-" + this.shade + "-" + this.color + ".gif";  
+        this.icon = "Card_Symbols\\" + this.color + "\\" + this.symbol +  "_" + this.color + "_" + this.shade + ".png";  
                     
     }
     
@@ -24,7 +24,7 @@ public class Card {
     
     public String whatSymbol(int symbol){
         switch(symbol){
-                case 1: return "octagon";
+                case 1: return "hexagon";
                 case 2: return "rectangle";
                 case 3: return "wave";
         }
@@ -33,8 +33,8 @@ public class Card {
     
     public String whatShade(int shade){
         switch(shade){
-                case 1: return "filled";
-                case 2: return "2";
+                case 1: return "full";
+                case 2: return "half";
                 case 3: return "empty";
         }
         return "0";
