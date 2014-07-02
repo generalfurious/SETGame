@@ -12,7 +12,9 @@ public class Deck { // Responsible for the deck of cards and the cards which are
 
     static ArrayList<Card> deck; // All 81 Cards
     static ArrayList<Card> displayed; // The Cards that are shown
-    static int random, size;
+    static ArrayList<String> symbol, color;
+    static String difficulty;
+    static int random, size, players;
 
     public Deck() {
         deck = new ArrayList<>();
@@ -20,17 +22,44 @@ public class Deck { // Responsible for the deck of cards and the cards which are
         size = 81;
 
         createDeck();
-        addCards(12); //Create the deck that is going to be displayed
+        fillDeck();//Create the deck that is going to be displayed
+
+    }
+    
+    public Deck(ArrayList<String> symbol, ArrayList<String> color, String difficulty) {
+        deck = new ArrayList<>();
+        displayed = new ArrayList<>();
+        size = 81;
+        
+        Deck.symbol = symbol;
+        Deck.color = color;
+        Deck.difficulty = difficulty;
+
+        createDeck();
+        fillDeck();
+
+    }
+    
+    public Deck(ArrayList<String> symbol, ArrayList<String> color) {
+        deck = new ArrayList<>();
+        displayed = new ArrayList<>();
+        size = 81;
+        
+        Deck.symbol = symbol;
+        Deck.color = color;
+        
+        createDeck();
         fillDeck();
 
     }
 
     public static void createDeck() {    // Create the 81 Cards with each number, shade, symbol and color
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 0; i <= 3; i++) {
             for (int j = 1; j <= 3; j++) {
-                for (int k = 1; k <= 3; k++) {
-                    for (int l = 1; l <= 3; l++) {
-                        deck.add(new Card(i, j, k, l));
+                for (String symbol : Deck.symbol) {
+                    for (String color : Deck.color) {
+//                        deck.add(new Card(i, j, symbol, color));
+                        System.out.println(i + "," + j+ "," + symbol+ ","+ color);
                     }//end of l (color)
                 }//end of k (symbol) 
             }//end of j (shade) 

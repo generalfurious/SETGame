@@ -117,6 +117,7 @@ public class Design extends JFrame {
             new Deck();
 
             number = Integer.parseInt(Deck.displayed.get(i).getNumber());
+            JLabel dump = new JLabel(new ImageIcon("Card_Symbols\\dump.png"));
             switch (number) {
                 case 1:
                     System.out.println("1");
@@ -125,6 +126,7 @@ public class Design extends JFrame {
                 case 2:
                     System.out.println("2");
                     JPanelList.get(i).add(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
+                    JPanelList.get(i).add(dump);
                     JPanelList.get(i).add(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
                     break;
                 case 3:
