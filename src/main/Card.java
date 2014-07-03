@@ -14,12 +14,7 @@ public class Card {
     }
     
     public String whatNumber(int number){
-        switch(number){
-                case 1: return "1";
-                case 2: return "2";
-                case 3: return "3";
-        }
-        return "0";
+        return String.valueOf(number);
     }
     
 //    public String whatSymbol(int symbol){

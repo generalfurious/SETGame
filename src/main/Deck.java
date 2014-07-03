@@ -29,7 +29,10 @@ public class Deck { // Responsible for the deck of cards and the cards which are
     public Deck(ArrayList<String> symbol, ArrayList<String> color, String difficulty) {
         deck = new ArrayList<>();
         displayed = new ArrayList<>();
-        size = 81;
+        if(color.get(1).isEmpty())
+            size = 27;
+        else
+            size = 81;
         
         Deck.symbol = symbol;
         Deck.color = color;
@@ -43,7 +46,10 @@ public class Deck { // Responsible for the deck of cards and the cards which are
     public Deck(ArrayList<String> symbol, ArrayList<String> color) {
         deck = new ArrayList<>();
         displayed = new ArrayList<>();
-        size = 81;
+        if(color.get(1).isEmpty())
+            size = 27;
+        else
+            size = 81;
         
         Deck.symbol = symbol;
         Deck.color = color;
@@ -54,12 +60,11 @@ public class Deck { // Responsible for the deck of cards and the cards which are
     }
 
     public static void createDeck() {    // Create the 81 Cards with each number, shade, symbol and color
-        for (int i = 0; i <= 3; i++) {
+        for (int i = 1; i <= 3; i++) {
             for (int j = 1; j <= 3; j++) {
-                for (String symbol : Deck.symbol) {
-                    for (String color : Deck.color) {
-//                        deck.add(new Card(i, j, symbol, color));
-                        System.out.println(i + "," + j+ "," + symbol+ ","+ color);
+                for (String symbolx : Deck.symbol) {
+                    for (String colorx : Deck.color) {
+                        deck.add(new Card(i, j, symbolx, colorx));
                     }//end of l (color)
                 }//end of k (symbol) 
             }//end of j (shade) 
@@ -107,9 +112,23 @@ public class Deck { // Responsible for the deck of cards and the cards which are
             }
         }
     }
-
-    public static void removeCard(Card card) { //Removes a Card
-        displayed.remove(card);
+    
+    public static void replaceCards(ArrayList<Card> remove) { //Removes a Card
+        for(Card oldCard : remove){
+            for(int i=0;i<displayed.size();i++){
+                if(displayed.get(i) == oldCard){
+                    random = new Random().nextInt(size); // Create a random number(0, size+1)
+                    displayed.set(i, deck.get(random));
+                    size--;
+                }
+            }
+        }
+    }
+    
+    public static void removeCards(ArrayList<Card> remove){
+        for(Card old: remove){
+            displayed.remove(old);
+        }
     }
 
     public static void fillDeck() { // Fills the deck if there is no Set or if there are less than 12 Cards

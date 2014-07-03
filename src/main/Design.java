@@ -24,6 +24,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class Design extends JFrame {
 ///Klassen ID
@@ -35,6 +38,7 @@ public class Design extends JFrame {
     public ArrayList<Icon> IconList = new ArrayList<Icon>();
     public ArrayList<String> pathesList;
     public ArrayList<Card> JPClickedList = new ArrayList<Card>();
+    ArrayList<Card>        clicked = new ArrayList<>();
     
     private final int X = 50;			//#1
     private final int Y = 50;			//#2
@@ -52,6 +56,7 @@ public class Design extends JFrame {
     private int number;
     private int von = 1;
     private int bis = 3;
+    int size;
 ///Standardkonsruktor	
     public Design() throws InterruptedException {
         ///JFrame ...
@@ -64,7 +69,7 @@ public class Design extends JFrame {
 
         this.setLocationRelativeTo(null);
         this.setFocusable(true);
-
+        
         //frame_player1
         this.frame_player1 = new JFrame();
         this.frame_player1.setSize(50, 50);
@@ -76,15 +81,15 @@ public class Design extends JFrame {
         //Hier werden JPanels erstellt und gleichzeit an MausListener registriert
         this.createJPanels();
         //JPanels zum Frame hinzufügen
-
         this.showCards();
 
     }//Konstruktor wird geschlossen
 
 
+
 ///Klassen Methoden	
     public void createJPanels() {
-        for (int i = 0; i <= 12; i++) {
+        for (int i = 0; i <= Deck.displayed.size(); i++) {
             
             JPanelList.add(new MyJPanels("panel " +i));
             JPanelList.get(i).addMouseListener(new MausListener());
@@ -93,15 +98,16 @@ public class Design extends JFrame {
 
     public void showCards() throws InterruptedException {
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < Deck.displayed.size(); i++) {
                                                 //i < 4 1.Zeile
-            if (i >= 4 && i < 8) {              //2. Zeile
-                if (i == 4) {
+            size = Deck.displayed.size()/3;
+            if (i >= size && i < size *2) {              //2. Zeile
+                if (i == size) {
                     this.setXAchseDefault();
                 }
                 this.y_Achse = 235;
-            } else if (i >= 8 && i < 12) {      //3.Zeile
-                if (i == 8) {
+            } else if (i >= size*2 && i < Deck.displayed.size()) {      //3.Zeile
+                if (i == size*2) {
                     this.setXAchseDefault();
                 }
                 this.y_Achse = 465;
@@ -109,24 +115,20 @@ public class Design extends JFrame {
 
             JPanelList.get(i).setBounds(x_Achse, y_Achse, 110, 225);
             JPanelList.get(i).setBackground(Color.WHITE);
+            JPanelList.get(i).setBorder(null);
             
-            new Deck();
             
-            Random ran = new Random();
-            number = ran.nextInt(bis + 1 - von) + von;
+            number = Integer.parseInt(Deck.displayed.get(i).getNumber());
             
             switch (number) {
                 case 1:
-                    System.out.println("1");
                     JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
                     break;
                 case 2:
-                    System.out.println("2");
                     JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
                     JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
                     break;
                 case 3:
-                    System.out.println("3");
                     JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
                     JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
                     JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
@@ -160,33 +162,34 @@ public class Design extends JFrame {
             st = new StringTokenizer(e.getComponent().getName(), " ");
             
             while(st.hasMoreTokens()) {
-                try {
+                try{
                     int a = Integer.parseInt(st.nextToken());
-                    System.out.println(e.getComponent().getName() +" hat die Zahl: " + a);
-                } catch (Exception exc) {
-                    
+           
+            if(JPanelList.get(a).getBorder() != null){
+                JPanelList.get(a).setBorder(null);
+                clicked.remove(Deck.displayed.get(a));
+            }else{
+                JPanelList.get(a).setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.RED));
+                clicked.add(Deck.displayed.get(a));
+            }
+            
+             if(clicked.size() == 3){
+                if(Deck.isSet(clicked.get(0), clicked.get(1), clicked.get(2))){
+                    if(Deck.displayed.size()>=12)
+                        Deck.removeCards(clicked);
+                    else
+                        Deck.replaceCards(clicked);
+                }else{
+                    JOptionPane.showMessageDialog(null, "That isn't a Set!");
+//                    clicked.removeAll(clicked);
+
                 }
             }
-            
-            //
-            System.out.println(zahler);
-                
-            System.out.println("Sie haben geklickt: " +e.getComponent().getName());
-           
-        
-            
-            
-        for(int i = 0; i<JPanelList.size();i++) {
-            if(JPanelList.get(i).getName().equals(e.getComponent().getName())) {
-                JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.RED));
+            }catch(Exception ex){
+                    }
             }
-        }    
-
-       // Deck.isSet(JPClickedList.get(0), JPClickedList.get(1), JPClickedList.get(2));
-        
             
-        }//mouseClicked;
-
+        }
         @Override
         public void mouseEntered(MouseEvent arg0) {
         }
@@ -208,10 +211,6 @@ public class Design extends JFrame {
     
     
     public static void main(String[] args) {
-
-        try {
-            new Design();
-        } catch (InterruptedException e) {
-        }
+        new Deck();
     }
 }
