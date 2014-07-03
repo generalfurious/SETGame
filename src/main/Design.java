@@ -67,7 +67,7 @@ public class Design extends JFrame {
         this.frame_player1.setSize(50, 50);
         this.frame_player1.setLocation(10, 10);
         this.frame_player1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		this.frame_player1.setVisible(true);
+      //  this.frame_player1.setVisible(true);
 
         ///JPanel ...
         //Hier werden JPanels erstellt und gleichzeit an MausListener registriert
@@ -113,10 +113,9 @@ public class Design extends JFrame {
             
             new Deck();
             
-           //
-            
-            number = (int) Math.random()*3+1;//Integer.parseInt(Deck.displayed.get(i).getNumber());
-            System.out.println(number);
+           
+            Random ran = new Random();
+            number = ran.nextInt(3 + 1 - 1) + 1;
             
             switch (number) {
                 case 1:
@@ -175,7 +174,7 @@ public class Design extends JFrame {
             }
             }
 
-        Deck.isSet(JPClickedList.get(0), JPClickedList.get(1), JPClickedList.get(2));
+       // Deck.isSet(JPClickedList.get(0), JPClickedList.get(1), JPClickedList.get(2));
         
             
         }//mouseClicked;
