@@ -32,7 +32,8 @@ public class Design extends JFrame {
     private ArrayList<JPanel> JPanelList = new ArrayList<>();
     private ArrayList<Icon> IconList = new ArrayList<Icon>();
     private ArrayList<String> pathesList;
-
+    private ArrayList<Card> JPClickedList = new ArrayList<Card>();
+    
     private final int X = 50;			//#1
     private final int Y = 50;			//#2
 
@@ -73,9 +74,10 @@ public class Design extends JFrame {
         this.createJPanels();
         //JPanels zum Frame hinzufügen
 
-        this.setJPanelIntoFrame();
+        this.showCards();
 
     }//Konstruktor wird geschlossen
+
 
 ///Klassen Methoden	
     public void createJPanels() {
@@ -86,7 +88,7 @@ public class Design extends JFrame {
         }
     }
 
-    public void setJPanelIntoFrame() throws InterruptedException {
+    public void showCards() throws InterruptedException {
 
         Random r;
         int von = 0, bis = 90;
@@ -108,16 +110,14 @@ public class Design extends JFrame {
 
             JPanelList.get(i).setBounds(x_Achse, y_Achse, 100, 220);
             JPanelList.get(i).setBackground(Color.WHITE);
-
-            this.add(JPanelList.get(i));
-            this.repaint();
-            this.setSize(this.getWidth() + 1, this.getHeight() + 1);					//JFrame ändert sich je nach Bedarf
-            this.validate();
-
+            
             new Deck();
-
-            number = Integer.parseInt(Deck.displayed.get(i).getNumber());
-            JLabel dump = new JLabel(new ImageIcon("Card_Symbols\\dump.png"));
+            
+           
+            
+            number = (int) Math.random()*3+1;//Integer.parseInt(Deck.displayed.get(i).getNumber());
+            System.out.println(number);
+            
             switch (number) {
                 case 1:
                     System.out.println("1");
@@ -126,7 +126,6 @@ public class Design extends JFrame {
                 case 2:
                     System.out.println("2");
                     JPanelList.get(i).add(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
-                    JPanelList.get(i).add(dump);
                     JPanelList.get(i).add(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
                     break;
                 case 3:
@@ -136,32 +135,34 @@ public class Design extends JFrame {
                     JPanelList.get(i).add(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
                     break;
             }
-
+            
             x_Achse += 105;														//#6
 
+            this.add(JPanelList.get(i));
+            this.repaint();
+            this.setSize(this.getWidth() +1 , this.getHeight() + 1);
+            
         }//for(int i;...;...) closing
     }//Method closing
 
     public void setXAchseDefault() {
         x_Achse = 5;
     }
-
-    public void setYAchseDefault() {
-        y_Achse = 5;
-    }
+    
+ 
 
 ///Innere Klassen, Listener	
     private class MausListener implements MouseListener {
-
-        String eins = null;
-        String zwei = null;
-        String drei = null;
-
+        
         @Override
         public void mouseClicked(MouseEvent e) {
             zahler += e.getClickCount();
             System.out.println(zahler);
-
+                
+            System.out.println("Sie haben geklickt: " +e.getComponent().getName());
+            System.out.println(JPanelList.get(0));
+            //JPClickedList.add( e.getSource());
+            
             if (zahler == 4) {
                 JDialog d = new JDialog(Design.this);
                 d.add(new JLabel("Zu Viele Klicks"));
@@ -169,23 +170,14 @@ public class Design extends JFrame {
                 d.setSize(100, 100);
                 d.setVisible(true);
                 zahler = 0;
+                for(int i = 0; i<JPClickedList.size();i++) {
+            //    System.out.println("JPClickedList Index-No: " + i +" Content: " +JPClickedList.get(i).getName());
+            }
             }
 
-            eins = e.getComponent().getName();
-            if (e.getComponent().getName() != eins) {
-                zwei = e.getComponent().getName();
-            }
-            if (e.getComponent().getName() != zwei && e.getComponent().getName() != eins) {
-                drei = e.getComponent().getName();
-            }
-
-            if (eins != null && zwei != null && drei != null) {
-                System.out.println(eins + " " + zwei + " " + drei);
-            }
-            System.out.println(eins);
-            System.out.println(zwei);
-            System.out.println(drei);
-
+        Deck.isSet(JPClickedList.get(0), JPClickedList.get(1), JPClickedList.get(2));
+        
+            
         }//mouseClicked;
 
         @Override
