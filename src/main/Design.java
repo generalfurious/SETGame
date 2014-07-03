@@ -23,6 +23,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.util.StringTokenizer;
 
 public class Design extends JFrame {
 ///Klassen ID
@@ -106,7 +107,7 @@ public class Design extends JFrame {
                 this.y_Achse = 465;
             }
 
-            JPanelList.get(i).setBounds(x_Achse, y_Achse, 100, 225);
+            JPanelList.get(i).setBounds(x_Achse, y_Achse, 110, 225);
             JPanelList.get(i).setBackground(Color.WHITE);
             
             new Deck();
@@ -132,7 +133,7 @@ public class Design extends JFrame {
                     break;
             }
             
-            x_Achse += 105;														//#6
+            x_Achse += 115;														//#6
 
             this.add(JPanelList.get(i));
             this.repaint();
@@ -151,19 +152,33 @@ public class Design extends JFrame {
 ///Innere Klassen, Listener	
     private class MausListener implements MouseListener {
         
+        StringTokenizer st = null;
+        
         @Override
         public void mouseClicked(MouseEvent e) {
             zahler += e.getClickCount();
+            st = new StringTokenizer(e.getComponent().getName(), " ");
+            
+            while(st.hasMoreTokens()) {
+                try {
+                    int a = Integer.parseInt(st.nextToken());
+                    System.out.println(e.getComponent().getName() +" hat die Zahl: " + a);
+                } catch (Exception exc) {
+                    
+                }
+            }
+            
+            
             System.out.println(zahler);
                 
             System.out.println("Sie haben geklickt: " +e.getComponent().getName());
-            System.out.println(JPanelList.get(0));
-            //JPClickedList.add( e.getSource());
+           
+        
             
             
         for(int i = 0; i<JPanelList.size();i++) {
             if(JPanelList.get(i).getName().equals(e.getComponent().getName())) {
-                JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(3,3,3,3,Color.RED));
+                JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.RED));
             }
         }    
 
