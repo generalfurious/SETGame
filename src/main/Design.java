@@ -113,7 +113,7 @@ public class Design extends JFrame {
             
             new Deck();
             
-           
+           //
             
             number = (int) Math.random()*3+1;//Integer.parseInt(Deck.displayed.get(i).getNumber());
             System.out.println(number);
