@@ -168,7 +168,7 @@ public class Design extends JFrame {
                 }
             }
             
-            
+            //
             System.out.println(zahler);
                 
             System.out.println("Sie haben geklickt: " +e.getComponent().getName());
