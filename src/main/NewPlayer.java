@@ -21,7 +21,6 @@ public class NewPlayer extends JFrame {
 
     public NewPlayer() {
         super("Player " + (zaehler++));
-        
     }
 
     
@@ -41,7 +40,7 @@ class Button extends JButton {
     private static int zaehler = 0;
 
     public Button(JFrame obj) {
-        super();
+        super("Button" + (zaehler++));
         setName("SET");
         this.frame_Name = obj.getName();
     }

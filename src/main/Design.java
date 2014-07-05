@@ -10,25 +10,20 @@ package main;
  *
  *
  */
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class Design extends JFrame implements Runnable{
 ///Klassen ID
@@ -41,19 +36,16 @@ public class Design extends JFrame implements Runnable{
     public ArrayList<Card> clicked = new ArrayList<>();
     public ArrayList<MyJPanels> cards = new ArrayList<>();      //Speichert die geklickten JPanels, siehe in Mouslistener
     
-    private final int X = 50;			//#1
-    private final int Y = 50;			//#2
+    public static final int PANEL_WIDTH  = 115; 
+    public static final int PANEL_HEIGHT = 230;
 
-    JFrame frame_player1 = null;
-    JFrame frame_player2 = null;
-
-    JLabel label1 = null;
-    JLabel label2 = null;
-    JLabel label3 = null;
+    private JScrollPane scrollPane = null;      //
+    private JPanel container  = null;
+    
 
     private int zahler = 0;                      //#3
-    private int x_Achse = 5;			//#4
-    private int y_Achse = 5;			//#5
+    public int x_Achse = 5;			//#4
+    public int y_Achse = 5;			//#5
     private int number;
     private int von = 1;
     private int bis = 3;
@@ -67,11 +59,13 @@ public class Design extends JFrame implements Runnable{
         this.setVisible(true);
         this.setSize(700, 725);									//setSize(Width,Height); 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setFocusable(true);
-        
+        this.container = new JPanel();
       
+        JScrollPane pane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        
 
    ///JPanel ...
         //Hier werden JPanels erstellt und gleichzeit an MausListener registriert
@@ -79,7 +73,9 @@ public class Design extends JFrame implements Runnable{
         //JPanels zum Frame hinzufügen
         this.showCards();
 
-        //this.setTime();                                                               //Zeigt die Uhrzeit an,
+        //this.setTime();   //Zeigt die Uhrzeit an,
+        
+        
     }//Konstruktor wird geschlossen
 
 
@@ -90,6 +86,7 @@ public class Design extends JFrame implements Runnable{
             
             JPanelList.add(new MyJPanels("panel " +i));
             JPanelList.get(i).addMouseListener(new MausListener());
+            
         }
     }
 
@@ -109,8 +106,9 @@ public class Design extends JFrame implements Runnable{
                 }
                 this.y_Achse = 475;
             }
-
-            JPanelList.get(i).setBounds(x_Achse, y_Achse, 115, 230);
+            
+            //JPanelList.get(i).set
+            JPanelList.get(i).setBounds(x_Achse, y_Achse, this.PANEL_WIDTH, this.PANEL_HEIGHT);
             JPanelList.get(i).setBackground(Color.WHITE);
             JPanelList.get(i).setBorder(null);
             
@@ -121,19 +119,25 @@ public class Design extends JFrame implements Runnable{
                     JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
                     break;
                 case 2:
-                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
-                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
+                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())),number);
+                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())),number);
                     break;
                 case 3:
-                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
-                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
-                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
+                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())),number);
+                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())),number);
+                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())),number);
                     break;
             }
             
             x_Achse += 120;														//#6
            
+            this.container.add(JPanelList.get(i));
+            this.scrollPane = new JScrollPane(this.container);
+            
+            this.add(scrollPane);
             this.add(JPanelList.get(i));
+           
+                    
             
         }//for(int i;...;...) closing
        this.setSize(x_Achse + 15 , this.getHeight());                       //Hier wird der JFrame noch einmal je nach Bedarf gezeichnet
@@ -168,12 +172,16 @@ public class Design extends JFrame implements Runnable{
             zahler += e.getClickCount();
             st = new StringTokenizer(e.getComponent().getName(), " ");
             
+            
+            System.out.println("Geklickt an Positon, X: " +e.getX() +" Y:" +e.getYOnScreen());
+            
+            
             cards.add((MyJPanels) e.getComponent());
             
             while(st.hasMoreTokens()) {
                 try{
                     int a = Integer.parseInt(st.nextToken());
-           
+                    
             if(JPanelList.get(a).getBorder() != null){
                 JPanelList.get(a).setBorder(null);
                 clicked.remove(Deck.displayed.get(a));
