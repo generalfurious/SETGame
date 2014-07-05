@@ -35,10 +35,9 @@ public class Design extends JFrame {
 
 ///Klassenattribute
     public ArrayList<MyJPanels> JPanelList = new ArrayList<>();
-    public ArrayList<Icon> IconList = new ArrayList<Icon>();
-    public ArrayList<String> pathesList;
-    public ArrayList<Card> JPClickedList = new ArrayList<Card>();
-    ArrayList<Card>        clicked = new ArrayList<>();
+    public ArrayList<Icon> IconList = new ArrayList<>();
+    public ArrayList<Card> clicked = new ArrayList<>();
+    public ArrayList<MyJPanels> cards = new ArrayList<>();      //Speichert die geklickten JPanels, siehe in Mouslistener
     
     private final int X = 50;			//#1
     private final int Y = 50;			//#2
@@ -105,15 +104,15 @@ public class Design extends JFrame {
                 if (i == size) {
                     this.setXAchseDefault();
                 }
-                this.y_Achse = 235;
+                this.y_Achse = 240;
             } else if (i >= size*2 && i < Deck.displayed.size()) {      //3.Zeile
                 if (i == size*2) {
                     this.setXAchseDefault();
                 }
-                this.y_Achse = 465;
+                this.y_Achse = 475;
             }
 
-            JPanelList.get(i).setBounds(x_Achse, y_Achse, 110, 225);
+            JPanelList.get(i).setBounds(x_Achse, y_Achse, 115, 230);
             JPanelList.get(i).setBackground(Color.WHITE);
             JPanelList.get(i).setBorder(null);
             
@@ -122,6 +121,7 @@ public class Design extends JFrame {
             
             switch (number) {
                 case 1:
+                    
                     JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
                     break;
                 case 2:
@@ -135,7 +135,7 @@ public class Design extends JFrame {
                     break;
             }
             
-            x_Achse += 115;														//#6
+            x_Achse += 120;														//#6
 
             this.add(JPanelList.get(i));
             this.repaint();
@@ -161,6 +161,8 @@ public class Design extends JFrame {
             zahler += e.getClickCount();
             st = new StringTokenizer(e.getComponent().getName(), " ");
             
+            cards.add((MyJPanels) e.getComponent());
+            
             while(st.hasMoreTokens()) {
                 try{
                     int a = Integer.parseInt(st.nextToken());
@@ -175,6 +177,8 @@ public class Design extends JFrame {
             
              if(clicked.size() == 3){
                 if(Deck.isSet(clicked.get(0), clicked.get(1), clicked.get(2))){
+                    JOptionPane.showMessageDialog(null, "Congratulations! That is a Set"); 
+                    
                     if(Deck.displayed.size()>=12)
                         Deck.removeCards(clicked);
                     else
@@ -182,12 +186,19 @@ public class Design extends JFrame {
                 }else{
                     JOptionPane.showMessageDialog(null, "That isn't a Set!");
 //                    clicked.removeAll(clicked);
-
                 }
+                
+              for(int i = 0; i<cards.size();i++) {
+                  System.out.println(cards.get(i));
+                  cards.get(i).setBorder(null);
+              }
+              
+              clicked.clear();                                          //Diese Zeile löscht nach 3 Objekten die ArrayListe clicked, somit kann man mit der Zeile 177 immer wieder arbeiten
             }
-            }catch(Exception ex){
-                    }
+            }catch(Exception ex){}
             }
+            
+           
             
         }
         @Override
@@ -210,7 +221,7 @@ public class Design extends JFrame {
 
     
     
-    public static void main(String[] args) {
-        new Deck();
+    public static void main(String[] args) throws InterruptedException {
+            new Deck();
     }
 }
