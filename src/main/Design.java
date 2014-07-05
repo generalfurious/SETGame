@@ -66,7 +66,6 @@ public class Design extends JFrame implements Runnable{
       
         JScrollPane pane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         
-
    ///JPanel ...
         //Hier werden JPanels erstellt und gleichzeit an MausListener registriert
         this.createJPanels();
@@ -93,14 +92,14 @@ public class Design extends JFrame implements Runnable{
     public void showCards() throws InterruptedException {
 
         for (int i = 0; i < Deck.displayed.size(); i++) {
-                                                //i < 4 1.Zeile
+                                                                           //i < 4 1.Zeile
             size = Deck.displayed.size()/3;
-            if (i >= size && i < size *2) {              //2. Zeile
+            if (i >= size && i < size *2) {                                //2. Zeile
                 if (i == size) {
                     this.setXAchseDefault();
                 }
                 this.y_Achse = 240;
-            } else if (i >= size*2 && i < Deck.displayed.size()) {      //3.Zeile
+            } else if (i >= size*2 && i < Deck.displayed.size()) {         //3.Zeile
                 if (i == size*2) {
                     this.setXAchseDefault();
                 }
@@ -136,12 +135,9 @@ public class Design extends JFrame implements Runnable{
             
             this.add(scrollPane);
             this.add(JPanelList.get(i));
-           
-            
-            
-            
+       
         }//for(int i;...;...) closing
-       this.setSize(x_Achse + 15 , this.getHeight());                       //Hier wird der JFrame noch einmal je nach Bedarf gezeichnet
+       this.setSize(x_Achse + 15 , this.getHeight());   //Hier wird der JFrame noch einmal je nach Bedarf gezeichnet
        this.repaint();
        
     }//Method closing
@@ -196,9 +192,7 @@ public class Design extends JFrame implements Runnable{
                          && clicked.get(1) != clicked.get(2)){
                     
                      if(Deck.isSet(clicked.get(0), clicked.get(1), clicked.get(2))){
-                        JOptionPane.showMessageDialog(null, "Congratulations! That is a Set"); 
-                        
-                        
+                        JOptionPane.showMessageDialog(null, "Congratulations! That is a Set");
                         if(Deck.displayed.size()>=12)
                             Deck.removeCards(clicked);
                         else
@@ -206,6 +200,11 @@ public class Design extends JFrame implements Runnable{
                     }else{
                         JOptionPane.showMessageDialog(null, "That isn't a Set!");
     //                    clicked.removeAll(clicked);
+                           //Karten werden gelöscht
+                        for(int i = 0; i<clicked.size();i++) {
+                            removeCards(clicked.get(i));  
+                        }
+                        
                     }
 
                   for(int i = 0; i<cards.size();i++) {
@@ -213,35 +212,27 @@ public class Design extends JFrame implements Runnable{
                       cards.get(i).setBorder(null);
                   }
                   
-//                  for(int i = 0; i<cards.size();i++) {
-//                      cards.get(i).remove(i);
-//                      JPanelList.get(a).repaint(); 
-//                  }
-                  
                   clicked.clear();                                          //Diese Zeile löscht nach 3 Objekten die ArrayListe clicked, somit kann man mit der Zeile 177 immer wieder arbeiten
                   cards.clear();
                   zahler = 0;
                  }//if closing
                 }catch(Exception ex){}
             }
-            
-           
-            
         }
         @Override
-        public void mouseEntered(MouseEvent arg0) {
+        public void mouseEntered(MouseEvent e) {
         }
 
         @Override
-        public void mouseExited(MouseEvent arg0) {
+        public void mouseExited(MouseEvent e) {
         }
 
         @Override
-        public void mousePressed(MouseEvent arg0) {
+        public void mousePressed(MouseEvent e) {
         }
 
         @Override
-        public void mouseReleased(MouseEvent arg0) {
+        public void mouseReleased(MouseEvent e) {
         }
 
     }
@@ -251,6 +242,23 @@ public class Design extends JFrame implements Runnable{
         t.start();
     }
     
+    public void removeCards(Card a) {
+    
+        for(int i = 0;i<Deck.displayed.size();i++) {
+            
+            System.out.println("display: " +Deck.displayed.get(i).getIcon() +" Card: " +a.getIcon());
+            
+            if(Deck.displayed.get(i).getIcon() == a.getIcon()) {
+                 this.remove(JPanelList.get(i));
+                 this.repaint();
+            }
+            
+        }
+        
+ 
+    //        this.remove();
+    //        this.repaint();
+    }
     
     public static void main(String[] args) throws InterruptedException {
             new Deck();
