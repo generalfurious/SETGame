@@ -36,7 +36,7 @@ public class Design extends JFrame implements Runnable{
     public ArrayList<Card> clicked = new ArrayList<>();
     public ArrayList<MyJPanels> cards = new ArrayList<>();      //Speichert die geklickten JPanels, siehe in Mouslistener
     
-    public static final int PANEL_WIDTH  = 115; 
+    public static final int PANEL_WIDTH  = 125; 
     public static final int PANEL_HEIGHT = 230;
 
     private JScrollPane scrollPane = null;      //
@@ -57,7 +57,7 @@ public class Design extends JFrame implements Runnable{
         super("Set");
         this.setLayout(null);
         this.setVisible(true);
-        this.setSize(700, 725);									//setSize(Width,Height); 
+        this.setSize(700, 720);									//setSize(Width,Height); 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -129,7 +129,7 @@ public class Design extends JFrame implements Runnable{
                     break;
             }
             
-            x_Achse += 120;														//#6
+            x_Achse += 130;														//#6
            
             this.container.add(JPanelList.get(i));
             this.scrollPane = new JScrollPane(this.container);

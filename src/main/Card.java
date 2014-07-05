@@ -4,7 +4,7 @@ package main;
 public class Card {
     String number, shade, symbol, color, icon;
     
-    public static final int average_width = 110;
+    public static final int average_width = 105;
     public static final int max_height = 75;
     
     public Card(int number, int shade, String symbol, String color){

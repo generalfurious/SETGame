@@ -55,10 +55,10 @@ class MyJPanels extends JPanel {
             
             this.counter+=1;
             
-            int center_width  = (int) Math.sqrt(Design.PANEL_WIDTH) /2;
-            int center_height = Design.PANEL_HEIGHT / 2;
-            int upper_area    = center_height / 2;
-            int lower_area    = upper_area + 75;
+            int pos_x_axis  = (int) Math.sqrt(Design.PANEL_WIDTH) /3;
+            int pos_y_axis_upper_area    = Design.PANEL_HEIGHT / 4;
+            int pos_y_axis_lower_area    = (Design.PANEL_HEIGHT / 2) + (pos_y_axis_upper_area/2);
+            
             if (number == 2) {
                 
                 if (this.counter == 1) {
@@ -67,7 +67,7 @@ class MyJPanels extends JPanel {
                     //this.add(label,BorderLayout.NORTH);
                     
                     label.setSize((Card.average_width) ,(Card.max_height));
-                    label.setLocation(center_width,(this.getHeight()/10));      //Die Wurzel von x ergibt den y-wert /2 damit der wert in der mitte liegen soll
+                    label.setLocation(pos_x_axis,pos_y_axis_upper_area);      //Die Wurzel von x ergibt den y-wert /2 damit der wert in der mitte liegen soll
                     this.add(label);
                     this.validate();                    
                    
@@ -75,7 +75,7 @@ class MyJPanels extends JPanel {
                     
                 } else if (this.counter == 2) {
                     label.setSize((Card.average_width) ,(Card.max_height));                     
-                    label.setLocation((int) (Math.sqrt(this.getWidth())/2),(this.getHeight()/180));
+                    label.setLocation(pos_x_axis,pos_y_axis_lower_area);
                     this.add(label);
                     this.validate();
                 }
