@@ -16,20 +16,21 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-public class Design extends JFrame {
+public class Design extends JFrame implements Runnable{
 ///Klassen ID
 
     private static final long serialVersionUID = 1L;
@@ -78,6 +79,7 @@ public class Design extends JFrame {
         //JPanels zum Frame hinzufügen
         this.showCards();
 
+        //this.setTime();                                                               //Zeigt die Uhrzeit an,
     }//Konstruktor wird geschlossen
 
 
@@ -140,6 +142,18 @@ public class Design extends JFrame {
 
     public void setXAchseDefault() {
         x_Achse = 5;
+    }
+
+    @Override
+    public void run() {
+        while(true) {
+            try {
+                Date d = new Date();
+                this.setTitle(d.getHours()+":"+d.getMinutes()+":"+d.getSeconds());
+            } catch (Exception e) {
+            }
+        
+        }
     }
     
 ///Innere Klassen, Listener	
@@ -210,6 +224,10 @@ public class Design extends JFrame {
 
     }
 
+    public void setTime() {
+        Thread t = new Thread(this);
+        t.start();
+    }
     
     
     public static void main(String[] args) throws InterruptedException {
