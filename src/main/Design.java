@@ -10,6 +10,7 @@ package main;
  *
  *
  */
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -49,7 +50,7 @@ public class Design extends JFrame {
     JLabel label2 = null;
     JLabel label3 = null;
 
-    private int zahler = 0;                             //#3
+    private int zahler = 0;                      //#3
     private int x_Achse = 5;			//#4
     private int y_Achse = 5;			//#5
     private int number;
@@ -58,7 +59,7 @@ public class Design extends JFrame {
     int size;
 ///Standardkonsruktor	
     public Design() throws InterruptedException {
-        ///JFrame ...
+    ///JFrame ...
         //main frame
         super("Set");
         this.setLayout(null);
@@ -69,14 +70,9 @@ public class Design extends JFrame {
         this.setLocationRelativeTo(null);
         this.setFocusable(true);
         
-        //frame_player1
-        this.frame_player1 = new JFrame();
-        this.frame_player1.setSize(50, 50);
-        this.frame_player1.setLocation(10, 10);
-        this.frame_player1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      //  this.frame_player1.setVisible(true);
+      
 
-        ///JPanel ...
+   ///JPanel ...
         //Hier werden JPanels erstellt und gleichzeit an MausListener registriert
         this.createJPanels();
         //JPanels zum Frame hinzufügen
@@ -116,12 +112,10 @@ public class Design extends JFrame {
             JPanelList.get(i).setBackground(Color.WHITE);
             JPanelList.get(i).setBorder(null);
             
-            
             number = Integer.parseInt(Deck.displayed.get(i).getNumber());
             
             switch (number) {
                 case 1:
-                    
                     JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
                     break;
                 case 2:
@@ -136,21 +130,18 @@ public class Design extends JFrame {
             }
             
             x_Achse += 120;														//#6
-
+           
             this.add(JPanelList.get(i));
-            this.repaint();
-            this.setSize(this.getWidth() +1 , this.getHeight() + 1);
             
         }//for(int i;...;...) closing
+       this.setSize(x_Achse + 15 , this.getHeight());                       //Hier wird der JFrame noch einmal je nach Bedarf gezeichnet
+       this.repaint();
     }//Method closing
 
     public void setXAchseDefault() {
         x_Achse = 5;
     }
     
-   
- 
-
 ///Innere Klassen, Listener	
     private class MausListener implements MouseListener {
         
