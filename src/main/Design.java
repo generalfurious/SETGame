@@ -137,11 +137,13 @@ public class Design extends JFrame implements Runnable{
             this.add(scrollPane);
             this.add(JPanelList.get(i));
            
-                    
+            
+            
             
         }//for(int i;...;...) closing
        this.setSize(x_Achse + 15 , this.getHeight());                       //Hier wird der JFrame noch einmal je nach Bedarf gezeichnet
        this.repaint();
+       
     }//Method closing
 
     public void setXAchseDefault() {
@@ -189,13 +191,14 @@ public class Design extends JFrame implements Runnable{
                 }
                 
                         System.out.println("clicked.size(): " +clicked.size());
-                 if(clicked.size() %3 == 0 && e.getSource() instanceof MyJPanels 
+                 if(clicked.size() %3 == 0 
                          && clicked.get(0) != clicked.get(1) && clicked.get(0) != clicked.get(2)
                          && clicked.get(1) != clicked.get(2)){
                     
                      if(Deck.isSet(clicked.get(0), clicked.get(1), clicked.get(2))){
                         JOptionPane.showMessageDialog(null, "Congratulations! That is a Set"); 
-
+                        
+                        
                         if(Deck.displayed.size()>=12)
                             Deck.removeCards(clicked);
                         else
@@ -210,12 +213,13 @@ public class Design extends JFrame implements Runnable{
                       cards.get(i).setBorder(null);
                   }
                   
-                  for(int i = 0; i<cards.size();i++) {
-                      cards.get(i).remove(i);
-                      JPanelList.get(a).repaint(); 
-                  }
+//                  for(int i = 0; i<cards.size();i++) {
+//                      cards.get(i).remove(i);
+//                      JPanelList.get(a).repaint(); 
+//                  }
                   
                   clicked.clear();                                          //Diese Zeile löscht nach 3 Objekten die ArrayListe clicked, somit kann man mit der Zeile 177 immer wieder arbeiten
+                  cards.clear();
                   zahler = 0;
                  }//if closing
                 }catch(Exception ex){}
