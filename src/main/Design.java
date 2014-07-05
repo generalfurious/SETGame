@@ -172,45 +172,53 @@ public class Design extends JFrame implements Runnable{
             zahler += e.getClickCount();
             st = new StringTokenizer(e.getComponent().getName(), " ");
             
-            
-            System.out.println("Geklickt an Positon, X: " +e.getX() +" Y:" +e.getYOnScreen());
-            
+            System.out.println(zahler);
             
             cards.add((MyJPanels) e.getComponent());
             
             while(st.hasMoreTokens()) {
-                try{
-                    int a = Integer.parseInt(st.nextToken());
-                    
-            if(JPanelList.get(a).getBorder() != null){
-                JPanelList.get(a).setBorder(null);
-                clicked.remove(Deck.displayed.get(a));
-            }else{
-                JPanelList.get(a).setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.RED));
-                clicked.add(Deck.displayed.get(a));
-            }
-            
-             if(clicked.size() == 3){
-                if(Deck.isSet(clicked.get(0), clicked.get(1), clicked.get(2))){
-                    JOptionPane.showMessageDialog(null, "Congratulations! That is a Set"); 
-                    
-                    if(Deck.displayed.size()>=12)
-                        Deck.removeCards(clicked);
-                    else
-                        Deck.replaceCards(clicked);
+                    try{
+                        int a = Integer.parseInt(st.nextToken());
+
+                if(JPanelList.get(a).getBorder() != null){
+                    JPanelList.get(a).setBorder(null);
+                    clicked.remove(Deck.displayed.get(a));
                 }else{
-                    JOptionPane.showMessageDialog(null, "That isn't a Set!");
-//                    clicked.removeAll(clicked);
+                    JPanelList.get(a).setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.RED));
+                    clicked.add(Deck.displayed.get(a));
                 }
                 
-              for(int i = 0; i<cards.size();i++) {
-                  System.out.println(cards.get(i));
-                  cards.get(i).setBorder(null);
-              }
-              
-              clicked.clear();                                          //Diese Zeile löscht nach 3 Objekten die ArrayListe clicked, somit kann man mit der Zeile 177 immer wieder arbeiten
-            }
-            }catch(Exception ex){}
+                        System.out.println("clicked.size(): " +clicked.size());
+                 if(clicked.size() %3 == 0 && e.getSource() instanceof MyJPanels 
+                         && clicked.get(0) != clicked.get(1) && clicked.get(0) != clicked.get(2)
+                         && clicked.get(1) != clicked.get(2)){
+                    
+                     if(Deck.isSet(clicked.get(0), clicked.get(1), clicked.get(2))){
+                        JOptionPane.showMessageDialog(null, "Congratulations! That is a Set"); 
+
+                        if(Deck.displayed.size()>=12)
+                            Deck.removeCards(clicked);
+                        else
+                            Deck.replaceCards(clicked);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "That isn't a Set!");
+    //                    clicked.removeAll(clicked);
+                    }
+
+                  for(int i = 0; i<cards.size();i++) {
+                      System.out.println(cards.get(i));
+                      cards.get(i).setBorder(null);
+                  }
+                  
+                  for(int i = 0; i<cards.size();i++) {
+                      cards.get(i).remove(i);
+                      JPanelList.get(a).repaint(); 
+                  }
+                  
+                  clicked.clear();                                          //Diese Zeile löscht nach 3 Objekten die ArrayListe clicked, somit kann man mit der Zeile 177 immer wieder arbeiten
+                  zahler = 0;
+                 }//if closing
+                }catch(Exception ex){}
             }
             
            
