@@ -159,6 +159,8 @@ public class Design extends JFrame implements Runnable{
 ///Innere Klassen, Listener	
     private class MausListener implements MouseListener {
         
+        int count_Wins = 0;
+        int count_Lose = 0;
         StringTokenizer st = null;
         
         @Override
