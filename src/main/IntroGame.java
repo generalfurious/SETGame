@@ -28,6 +28,7 @@ public class IntroGame extends javax.swing.JFrame {
 
     ButtonGroup group = new ButtonGroup();
     ButtonGroup against = new ButtonGroup();
+    
 
     public IntroGame() {
         initComponents();
@@ -36,6 +37,7 @@ public class IntroGame extends javax.swing.JFrame {
         group.add(jRadioNormal);
         against.add(jRadioComputer);
         against.add(jRadioPlayer);
+        jRadioPlayer.setSelected(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -316,7 +318,7 @@ public class IntroGame extends javax.swing.JFrame {
 
     }
     private void jButtonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlayActionPerformed
-
+        
         // Farben
         if (color.size() == 0) {
             if (jCheckRed.isSelected()) {
@@ -371,8 +373,8 @@ public class IntroGame extends javax.swing.JFrame {
             checkcolor = (String) jComboColor.getSelectedItem();
             color.clear();
             color.add(checkcolor);
-            System.out.println("color:"+color.size()+","+color.toString());
-        }else if (color.size() != 3) {
+            System.out.println("color:" + color.size() + "," + color.toString());
+        } else if (color.size() != 3) {
             JOptionPane.showMessageDialog(null, "Please choose 3 colors.");
             color.clear();
         }
@@ -382,36 +384,26 @@ public class IntroGame extends javax.swing.JFrame {
             symbol.clear();
             System.out.println("after clear" + symbol);
         }
-
         
         // Farbe für einfaches Spiel
-        
-        if (!(jRadioPlayer.isSelected()) && !(jRadioComputer.isSelected())) {
-            JOptionPane.showMessageDialog(null, "Please Select vs. player or computer");
-
+        // Player vs. Player oder Computer
+        if (jRadioPlayer.isSelected()) {
+            player = jRadioPlayer.getText();
+            players = getPlayer(player);
+            try {
+                new Game(symbol, color, players);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
-            // Player vs. Player oder Computer
-            if (jRadioPlayer.isSelected()) {
-                player = jRadioPlayer.getText();
-                players = getPlayer(player);
-                try {
-                    new Game(symbol, color,players);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                if (!(jRadioEasy.isSelected()) && !(jRadioNormal.isSelected())) {
-                    JOptionPane.showMessageDialog(null, "Please choose a difficulty");
-                      
-                } else {
-                    if(jRadioEasy.isSelected()){
-                    new Game(symbol,color,easy);
-                    }else{
-                    new Game(symbol,color, normal);
-                    }
-                    
-                    
+            if (!(jRadioEasy.isSelected()) && !(jRadioNormal.isSelected())) {
+                JOptionPane.showMessageDialog(null, "Please choose a difficulty");
 
+            } else {
+                if (jRadioEasy.isSelected()) {
+                    new Game(symbol, color, easy);
+                } else {
+                    new Game(symbol, color, normal);
                 }
 
             }
