@@ -390,7 +390,7 @@ public class IntroGame extends javax.swing.JFrame {
             players = getPlayer(player);
             try {
                 new Game(symbol, color, players);
-                dispose();
+               // dispose();
             } catch (InterruptedException | IOException | ClassNotFoundException ex) {
                 Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -22,15 +22,15 @@ public class Player extends JFrame {
     JLabel zahl;
     Container unten;
     Container oben;
-    String playername;
+    int playerNumber;
     
     
 
-    public Player(final String playername, int i) {
-        this.playername = playername;
+    public Player(final int i) {
+        this.playerNumber = i;
         player = this;
         // Frame erstellen
-        window = new JFrame(playername);
+        window = new JFrame("Player " + playerNumber);
         window.setSize(200, 190);
         set = new JButton("SET");
         
@@ -41,6 +41,11 @@ public class Player extends JFrame {
             };
         });
         end = new JButton("End");
+        end.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                Game.endGame();
+            };
+        });
         set.setFont(new Font("Lucida Grande", Font.PLAIN, 48));
         set.setPreferredSize(new Dimension(201, 107));
         end.setPreferredSize(new Dimension(75, 29));
@@ -83,9 +88,11 @@ public class Player extends JFrame {
 
     }
 
-    public String getPlayerName() {
-        return this.playername;
+    public int getPlayerNumber() {
+        return playerNumber;
     }
+
+    
 
     public int getScore() {
         return score;

@@ -65,15 +65,12 @@ public class Design extends JFrame implements Runnable {
     //Menubar reference variables declaration
     JMenuBar menuBar = null;
     JMenu menuFile = null;
-    JMenu menuHelp = null;
-    JMenu menuFileNew = null;
 
     //Submenu reference variable declaration
     JMenuItem menuItemFileLoad = null;
     JMenuItem menuItemFileSave = null;
     JMenuItem menuItemFileExit = null;
 
-    JMenuItem menuItemHelpShowManual = null;
 
 ///Standardkonsruktor	
     public Design() throws InterruptedException {
@@ -93,27 +90,22 @@ public class Design extends JFrame implements Runnable {
         menuBar = new JMenuBar();
         //Hinzufügen von Menüs
         menuFile = new JMenu("File");
-        menuHelp = new JMenu("Help");
 
         menuBar.add(menuFile);
-        menuBar.add(menuHelp);
 
         //Add menu entries into in FileMenu
         menuItemFileSave = new JMenuItem("Save");
         menuItemFileLoad = new JMenuItem("Load");
         menuItemFileExit = new JMenuItem("Exit");
-        menuItemHelpShowManual = new JMenuItem("Show Manual");
 
         //registry by FileListener
         menuItemFileSave.addActionListener(new MenuBarListener());
         menuItemFileLoad.addActionListener(new MenuBarListener());
         menuItemFileExit.addActionListener(new MenuBarListener());
-        menuItemHelpShowManual.addActionListener(new MenuBarListener());
 
         menuFile.add(menuItemFileSave);
         menuFile.add(menuItemFileLoad);
         menuFile.add(menuItemFileExit);
-        menuHelp.add(menuItemHelpShowManual);
 
         ///JPanel ...
         //Hier werden JPanels erstellt und gleichzeit an MausListener registriert
@@ -340,12 +332,8 @@ public class Design extends JFrame implements Runnable {
                     }
                 } //Listens to Sub-Menu "Exit"
                 else if (e.getSource() == Design.this.menuItemFileExit) {
-
+                    System.exit(0);
                 } //Listens to Sub-Menu "Help-ShowManual"
-                else if (e.getSource() == Design.this.menuItemHelpShowManual) {
-
-                }
-
             }
         }
     }
