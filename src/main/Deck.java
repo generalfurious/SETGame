@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main;
 
 import java.util.ArrayList;
@@ -13,59 +8,31 @@ public class Deck { // Responsible for the deck of cards and the cards which are
     static ArrayList<Card> deck; // All 81 Cards
     static ArrayList<Card> displayed; // The Cards that are shown
     static ArrayList<String> symbol, color;
-    static String difficulty;
     static int random, size, players;
 
-    public Deck() {
-        deck = new ArrayList<>();
-        displayed = new ArrayList<>();
-        size = 81;
-
-        createDeck();
-        fillDeck();//Create the deck that is going to be displayed
-
-    }
-    
-    public Deck(ArrayList<String> symbol, ArrayList<String> color, String difficulty) {
-        deck = new ArrayList<>();
-        displayed = new ArrayList<>();
-        if(color.get(1).isEmpty())
-            size = 27;
-        else
-            size = 81;
-        
-        Deck.symbol = symbol;
-        Deck.color = color;
-        Deck.difficulty = difficulty;
-
-        createDeck();
-        fillDeck();
-
-    }
-    
     public Deck(ArrayList<String> symbol, ArrayList<String> color) {
         deck = new ArrayList<>();
         displayed = new ArrayList<>();
-        if(color.get(1).isEmpty())
-            size = 27;
-        else
-            size = 81;
-        
+
         Deck.symbol = symbol;
         Deck.color = color;
-        
+
         createDeck();
         fillDeck();
-
     }
 
     public static void createDeck() {    // Create the 81 Cards with each number, shade, symbol and color
         for (int i = 1; i <= 3; i++) {
             for (int j = 1; j <= 3; j++) {
                 for (String symbolx : Deck.symbol) {
-                    for (String colorx : Deck.color) {
-                        deck.add(new Card(i, j, symbolx, colorx));
-                    }//end of l (color)
+                    if (color.size() != 1) {
+                        for (String colorx : Deck.color) {
+                            deck.add(new Card(i, j, symbolx, colorx));
+                        }
+                    }//end of l (color) 
+                    else {
+                        deck.add(new Card(i, j, symbolx, Deck.color.get(0)));
+                    }
                 }//end of k (symbol) 
             }//end of j (shade) 
         }//end of i (number) 
@@ -102,31 +69,56 @@ public class Deck { // Responsible for the deck of cards and the cards which are
         return false;
     }
 
-    public static void addCards(int number) { // Add Cards to the displayed deck
-        if (size != 0) {
-            for (int i = 0; i < number; i++) { // At the beginning we add 12 Random Cards to this deck
-                random = new Random().nextInt(size); // Create a random number(0, size+1)
-                displayed.add(deck.get(random));
-                deck.remove(random); // Take this card from the original deck
-                size--; // Decrement the size of the original deck
-            }
-        }
-    }
-    
-    public static void replaceCards(ArrayList<Card> remove) { //Removes a Card
-        for(Card oldCard : remove){
-            for(int i=0;i<displayed.size();i++){
-                if(displayed.get(i) == oldCard){
-                    random = new Random().nextInt(size); // Create a random number(0, size+1)
-                    displayed.set(i, deck.get(random));
-                    size--;
+    public static ArrayList<Card> findSet() { // Returns the Set
+        ArrayList<Card> found = new ArrayList<>();
+        for (Card a : displayed) {
+            for (Card b : displayed) {
+                for (Card c : displayed) {
+                    if (a.equals(b) || a.equals(c) || b.equals(c)) {
+                        continue;
+                    }
+                    if (isSet(a, b, c)) {
+                        found.add(a);
+                        found.add(b);
+                        found.add(c);
+                        return found;
+                    }
                 }
             }
         }
+        return found;
     }
-    
-    public static void removeCards(ArrayList<Card> remove){
-        for(Card old: remove){
+
+    public static void addCards(int number) { // Add Cards to the displayed deck
+        if (!deck.isEmpty()) {
+            for (int i = 0; i < number; i++) { // At the beginning we add 12 Random Cards to this deck
+                random = new Random().nextInt(deck.size()); // Create a random number(0, size+1)
+                displayed.add(deck.get(random));
+                deck.remove(random); // Take this card from the original deck
+            }
+        }
+    }
+
+    public static void replaceCards(ArrayList<Card> remove) { //Removes a Card
+        if (Deck.displayed.size() == 12) {
+            for (Card oldCard : remove) {
+                for (int i = 0; i < displayed.size(); i++) {
+                    if (displayed.get(i) == oldCard) {
+                        random = new Random().nextInt(size); // Create a random number(0, size+1)
+                        displayed.set(i, deck.get(random));
+                        size--;
+                    }
+                }
+            }
+            fillDeck();
+        }else{
+            removeCards(remove);
+            fillDeck();
+        }
+    }
+
+    public static void removeCards(ArrayList<Card> remove) {
+        for (Card old : remove) {
             displayed.remove(old);
         }
     }
@@ -135,6 +127,14 @@ public class Deck { // Responsible for the deck of cards and the cards which are
         while (!isSetAvailable() || displayed.size() < 12 && deck.size() >= 3) {
             addCards(3);
         }
+    }
+
+    public static void setDeck(ArrayList<Card> deck) {
+        Deck.deck = deck;
+    }
+
+    public static void setDisplayed(ArrayList<Card> displayed) {
+        Deck.displayed = displayed;
     }
 
 }

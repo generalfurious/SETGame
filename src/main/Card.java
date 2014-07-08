@@ -1,7 +1,9 @@
 
 package main;
 
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable{
     String number, shade, symbol, color, icon;
     
     public static final int average_width = 105;

@@ -71,8 +71,6 @@ class MyJPanels extends JPanel {
                     this.add(label);
                     this.validate();                    
                    
-                    System.out.println(this.getWidth()+" - "+ (int) Math.sqrt(this.getWidth())/2);
-                    
                 } else if (this.counter == 2) {
                     label.setSize((Card.average_width) ,(Card.max_height));                     
                     label.setLocation(pos_x_axis,pos_y_axis_lower_area);

@@ -1,20 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main;
 
+import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author stefano
- */
 public class IntroGame extends javax.swing.JFrame {
 
     ArrayList<String> color = new ArrayList<>();
@@ -36,6 +30,8 @@ public class IntroGame extends javax.swing.JFrame {
         group.add(jRadioNormal);
         against.add(jRadioComputer);
         against.add(jRadioPlayer);
+        jLabelBild.setIcon(new ImageIcon("src\\main\\SET_logo.png"));
+        jRadioPlayer.setSelected(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -81,10 +77,9 @@ public class IntroGame extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jLabelBild = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/stefano/Dropbox/Lerngruppe/Java/SET_logo.png")); // NOI18N
 
         jButtonPlay.setText("Play");
         jButtonPlay.addActionListener(new java.awt.event.ActionListener() {
@@ -170,20 +165,12 @@ public class IntroGame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(35, 35, 35)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jRadioEasy)
-                                    .addComponent(jRadioNormal)
-                                    .addComponent(jRadioComputer)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jRadioPlayer)
-                                .addGap(242, 242, 242))))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jRadioEasy)
+                            .addComponent(jRadioNormal)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,58 +188,72 @@ public class IntroGame extends javax.swing.JFrame {
                                     .addComponent(jCheckHeart)))
                             .addComponent(jLabel5)
                             .addComponent(jLabel4))
-                        .addGap(84, 84, 84)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckGreen)
-                                    .addComponent(jLabel2)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGap(84, 84, 84)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jCheckYellow)
-                                            .addComponent(jCheckRed))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jCheckPurple)
-                                            .addComponent(jCheckBlue)))
-                                    .addComponent(jLabel3)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jComboColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel11))
-                                .addGap(56, 56, 56)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jCheckGreen)
+                                                        .addComponent(jLabel2)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(jCheckYellow)
+                                                                .addComponent(jCheckRed))
+                                                            .addGap(18, 18, 18)
+                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(jCheckPurple)
+                                                                .addComponent(jCheckBlue)))
+                                                        .addComponent(jLabel3)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                            .addComponent(jLabel10)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                            .addComponent(jComboColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(jLabel11))
+                                                    .addComponent(jLabel12))
+                                                .addGap(56, 56, 56)
+                                                .addComponent(jLabel8)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jComboPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jLabelBild, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(108, 108, 108)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(178, 178, 178))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel12))
-                        .addGap(178, 178, 178)))
-                .addGap(33, 33, 33))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(368, 368, 368)
+                                .addGap(268, 268, 268)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(35, 35, 35)
+                                        .addComponent(jRadioComputer))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jRadioPlayer)
+                                        .addGap(210, 210, 210)))))))
+                .addGap(21, 21, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButtonPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(313, 313, 313))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelBild, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(204, 204, 204)
-                                .addComponent(jLabel4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(jLabel1)
-                                .addGap(52, 52, 52)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jRadioPlayer)
-                                    .addComponent(jRadioComputer)
-                                    .addComponent(jLabel9))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jRadioPlayer)
+                            .addComponent(jRadioComputer)
+                            .addComponent(jLabel9))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jCheckOval)
@@ -275,7 +276,6 @@ public class IntroGame extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel7)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(204, 204, 204)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -288,18 +288,18 @@ public class IntroGame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCheckGreen)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
-                .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
-                .addGap(35, 35, 35)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel11)
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jButtonPlay)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -371,21 +371,16 @@ public class IntroGame extends javax.swing.JFrame {
             checkcolor = (String) jComboColor.getSelectedItem();
             color.clear();
             color.add(checkcolor);
-            System.out.println("color:"+color.size()+","+color.toString());
-        }else if (color.size() != 3) {
+        } else if (color.size() != 3) {
             JOptionPane.showMessageDialog(null, "Please choose 3 colors.");
             color.clear();
         }
         if (symbol.size() != 3) {
             JOptionPane.showMessageDialog(null, "Please choose 3 kinds of symbols.");
-            System.out.println("size symbol" + symbol.size());
             symbol.clear();
-            System.out.println("after clear" + symbol);
         }
 
-        
         // Farbe für einfaches Spiel
-        
         if (!(jRadioPlayer.isSelected()) && !(jRadioComputer.isSelected())) {
             JOptionPane.showMessageDialog(null, "Please Select vs. player or computer");
 
@@ -395,29 +390,32 @@ public class IntroGame extends javax.swing.JFrame {
                 player = jRadioPlayer.getText();
                 players = getPlayer(player);
                 try {
-                    new Game(symbol, color,players);
-                } catch (InterruptedException ex) {
+                    new Game(symbol, color, players);
+                } catch (InterruptedException | IOException | ClassNotFoundException ex) {
                     Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 if (!(jRadioEasy.isSelected()) && !(jRadioNormal.isSelected())) {
                     JOptionPane.showMessageDialog(null, "Please choose a difficulty");
-                      
+
                 } else {
-                    if(jRadioEasy.isSelected()){
-                    new Game(symbol,color,easy);
-                    }else{
-                    new Game(symbol,color, normal);
+                    try {
+                        if (jRadioEasy.isSelected()) {
+
+                            new Game(symbol, color, easy);
+
+                        } else {
+                            new Game(symbol, color, normal);
+                        }
+                    } catch (RemoteException | InterruptedException ex) {
+                        Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
-                    
 
                 }
 
             }
 
         }
-        System.out.println("symbol :" + symbol.size() + ", color" + color.size());
     }//GEN-LAST:event_jButtonPlayActionPerformed
 
     private void jCheckRedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckRedActionPerformed
@@ -500,6 +498,7 @@ public class IntroGame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelBild;
     private javax.swing.JRadioButton jRadioComputer;
     private javax.swing.JRadioButton jRadioEasy;
     private javax.swing.JRadioButton jRadioNormal;

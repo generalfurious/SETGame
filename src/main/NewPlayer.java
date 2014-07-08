@@ -6,7 +6,6 @@
 
 package main;
 
-import java.awt.HeadlessException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
