@@ -104,17 +104,17 @@ public class Deck { // Responsible for the deck of cards and the cards which are
             for (Card oldCard : remove) {
                 for (int i = 0; i < displayed.size(); i++) {
                     if (displayed.get(i) == oldCard) {
-                        random = new Random().nextInt(size); // Create a random number(0, size+1)
+                        random = new Random().nextInt(displayed.size()); // Create a random number(0, size+1)
                         displayed.set(i, deck.get(random));
-                        size--;
+                        deck.remove(random);
                     }
                 }
             }
-            fillDeck();
         }else{
             removeCards(remove);
-            fillDeck();
         }
+        fillDeck();
+
     }
 
     public static void removeCards(ArrayList<Card> remove) {

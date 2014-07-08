@@ -10,14 +10,12 @@ package main;
  *
  *
  */
-import com.sun.glass.ui.MenuBar;
-import com.sun.java.accessibility.AccessBridge;
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,7 +83,7 @@ public class Design extends JFrame implements Runnable {
         this.setVisible(true);
         this.setSize(700, 720);									//setSize(Width,Height); 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+        this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.setFocusable(true);
         this.container = new JPanel();
@@ -129,16 +127,23 @@ public class Design extends JFrame implements Runnable {
 
 ///Klassen Methoden	
     public void createJPanels() {
+        
+        JPanelList.clear();
         for (int i = 0; i <= Deck.displayed.size(); i++) {
 
             JPanelList.add(new MyJPanels("panel " + i));
             JPanelList.get(i).addMouseListener(new MausListener());
 
         }
-    }
+    }   
 
     public void showCards() throws InterruptedException {
-
+        for(int i=0; i<JPanelList.size();i++){
+            this.remove(JPanelList.get(i));
+        }
+        createJPanels();
+        x_Achse = 5;
+        y_Achse = 5;
         for (int i = 0; i < Deck.displayed.size(); i++) {
             //i < 4 1.Zeile
             size = Deck.displayed.size() / 3;
@@ -154,7 +159,6 @@ public class Design extends JFrame implements Runnable {
                 this.y_Achse = 475;
             }
 
-            //JPanelList.get(i).set
             JPanelList.get(i).setBounds(x_Achse, y_Achse, this.PANEL_WIDTH, this.PANEL_HEIGHT);
             JPanelList.get(i).setBackground(Color.WHITE);
             JPanelList.get(i).setBorder(null);
@@ -181,9 +185,11 @@ public class Design extends JFrame implements Runnable {
             //Add components into Frame    
             this.setJMenuBar(menuBar);
             this.add(JPanelList.get(i));
+            
 
         }//for(int i;...;...) closing
         this.setSize(x_Achse + 15, this.getHeight());   //Hier wird der JFrame noch einmal je nach Bedarf gezeichnet
+        this.validate();
         this.repaint();
 
     }//Method closing
@@ -213,12 +219,9 @@ public class Design extends JFrame implements Runnable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            zahler += e.getClickCount();
             st = new StringTokenizer(e.getComponent().getName(), " ");
 
-            System.out.println(zahler);
-
-            cards.add((MyJPanels) e.getComponent());
+            //cards.add((MyJPanels) e.getComponent());
 
             while (st.hasMoreTokens()) {
                 try {
@@ -232,40 +235,25 @@ public class Design extends JFrame implements Runnable {
                         clicked.add(Deck.displayed.get(a));
                     }
 
-                    System.out.println("clicked.size(): " + clicked.size());
-                    if (clicked.size() % 3 == 0
-                            && clicked.get(0) != clicked.get(1) && clicked.get(0) != clicked.get(2)
-                            && clicked.get(1) != clicked.get(2)) {
+                    if (clicked.size() == 3) {
 
                         if (Deck.isSet(clicked.get(0), clicked.get(1), clicked.get(2))) {
-                            JOptionPane.showMessageDialog(null, "Congratulations! That is a Set");
-                            if (Deck.displayed.size() >= 12) {
-                                Deck.removeCards(clicked);
-                            } else {
-                                Deck.replaceCards(clicked);
+                            JOptionPane.showMessageDialog(null, "Congratulations! This is a Set");
+                            Deck.replaceCards(clicked);
+                            showCards();
+                            for(int i=0;i<Deck.displayed.size();i++){
+                                System.out.println(i+". :" +Deck.displayed.get(i).getIcon()+ " Number: " + Deck.displayed.get(i).getNumber());
                             }
-                            //Bei Set werden karten vom Deck gelöscht
-                            for (int i = 0; i < clicked.size(); i++) {
-                                removeCards(clicked.get(i));
-                            }
-
                         } else {
                             JOptionPane.showMessageDialog(null, "That isn't a Set!");
-                            //                    clicked.removeAll(clicked);
-                            //Karten werden gelöscht
-
+                            showCards();
                         }
+                        clicked.clear(); //Karten werden gelöscht
 
-                        for (int i = 0; i < cards.size(); i++) {
-                            System.out.println(cards.get(i));
-                            cards.get(i).setBorder(null);
-                        }
-
-                        clicked.clear();                                          //Diese Zeile löscht nach 3 Objekten die ArrayListe clicked, somit kann man mit der Zeile 177 immer wieder arbeiten
-                        cards.clear();
-                        zahler = 0;
                     }//if closing
-                } catch (Exception ex) {
+                } catch (NumberFormatException | HeadlessException ex) {
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -358,6 +346,5 @@ public class Design extends JFrame implements Runnable {
         }
     }
     public static void main(String[] args) throws InterruptedException {
-        new Design();
     }
 }
