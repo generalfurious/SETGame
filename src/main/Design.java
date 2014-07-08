@@ -52,7 +52,7 @@ public class Design extends JFrame implements Runnable{
     int size;
 ///Standardkonsruktor	
     public Design() throws InterruptedException {
-    ///JFrame ...
+    ///JFrame ... (1)
         //main frame
         super("Set");
         this.setLayout(null);
@@ -64,11 +64,14 @@ public class Design extends JFrame implements Runnable{
         this.setFocusable(true);
         this.container = new JPanel();
       
-        JScrollPane pane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    //    
         
-   ///JPanel ...
+        
+    ///JPanel ...
         //Hier werden JPanels erstellt und gleichzeit an MausListener registriert
         this.createJPanels();
+    
+    ///JFrame ... (2)    
         //JPanels zum Frame hinzufügen
         this.showCards();
 
@@ -130,9 +133,6 @@ public class Design extends JFrame implements Runnable{
             
             x_Achse += 130;														//#6
            
-            this.container.add(JPanelList.get(i));
-            this.scrollPane = new JScrollPane(this.container);
-            
             this.add(scrollPane);
             this.add(JPanelList.get(i));
        
