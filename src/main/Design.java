@@ -197,13 +197,17 @@ public class Design extends JFrame implements Runnable{
                             Deck.removeCards(clicked);
                         else
                             Deck.replaceCards(clicked);
+                        //Bei Set werden karten vom Deck gelöscht
+                        for(int i = 0; i<clicked.size();i++) {
+                            removeCards(clicked.get(i));  
+                        }
+                        
+                        
                     }else{
                         JOptionPane.showMessageDialog(null, "That isn't a Set!");
     //                    clicked.removeAll(clicked);
                            //Karten werden gelöscht
-                        for(int i = 0; i<clicked.size();i++) {
-                            removeCards(clicked.get(i));  
-                        }
+                       
                         
                     }
 
@@ -254,10 +258,19 @@ public class Design extends JFrame implements Runnable{
             }
             
         }
-        
- 
     //        this.remove();
     //        this.repaint();
+    }
+    
+    public void setBorder(ArrayList<Card> cards) {
+        
+        for (int i = 0; i < Deck.displayed.size(); i++) {
+            if(Deck.displayed.get(i).getIcon() == cards.get(i).getIcon()) {
+                JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.RED));
+            }
+        }
+        
+    
     }
     
     public static void main(String[] args) throws InterruptedException {
