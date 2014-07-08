@@ -13,6 +13,7 @@ import javax.swing.*;
 public class Player extends JFrame {
 
     private int anzahl;
+    int score = 0;
     JFrame window;
     JButton set;
     JButton end;
@@ -78,13 +79,20 @@ public class Player extends JFrame {
     public String getPlayerName() {
         return this.playername;
     }
+    public void scoreIncrease(){
+        score++;
+    }
+    public void scoreDecrease(){
+        score--;
+    }
 
    private class ButtonL implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
             
-            
+            Design.setPlayer(this);
+     
         }
 
 }
