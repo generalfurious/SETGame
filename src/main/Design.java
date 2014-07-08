@@ -46,6 +46,7 @@ public class Design extends JFrame implements Runnable {
     public ArrayList<Card> clicked = new ArrayList<>();
     public ArrayList<MyJPanels> cards = new ArrayList<>();      //Speichert die geklickten JPanels, siehe in Mouslistener
     JFileChooser fileChooser;
+    static Player player;
 
     public static final int PANEL_WIDTH = 125;
     public static final int PANEL_HEIGHT = 230;
@@ -198,6 +199,10 @@ public class Design extends JFrame implements Runnable {
         x_Achse = 5;
     }
 
+    public static void setPlayer(Player obj){
+        player = obj;
+    }
+    
     @Override
     public void run() {
         while (true) {
@@ -241,15 +246,14 @@ public class Design extends JFrame implements Runnable {
                             JOptionPane.showMessageDialog(null, "Congratulations! This is a Set");
                             Deck.replaceCards(clicked);
                             showCards();
-                            for(int i=0;i<Deck.displayed.size();i++){
-                                System.out.println(i+". :" +Deck.displayed.get(i).getIcon()+ " Number: " + Deck.displayed.get(i).getNumber());
-                            }
+                            player.scoreIncrease();
                         } else {
                             JOptionPane.showMessageDialog(null, "That isn't a Set!");
                             showCards();
+                            player.scoreDecrease();
                         }
                         clicked.clear(); //Karten werden gelöscht
-
+                        System.out.println(player.getScore());
                     }//if closing
                 } catch (NumberFormatException | HeadlessException ex) {
                 } catch (InterruptedException ex) {

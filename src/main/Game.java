@@ -19,6 +19,9 @@ public class Game {
     public Game(ArrayList<String> symbol, ArrayList<String> color, int players) throws InterruptedException, IOException, ClassNotFoundException{
         new Deck(symbol, color);
         new Design();
+        for(int i=1;i<=players;i++){
+            new Player("Players "+i,i);
+        }
 
         //saveGame("savefile.set");
         //loadGame("savefile.set");

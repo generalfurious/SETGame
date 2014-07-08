@@ -13,6 +13,7 @@ import javax.swing.*;
 public class Player extends JFrame {
 
     private int anzahl;
+    Player player;
     int score = 0;
     JFrame window;
     JButton set;
@@ -27,20 +28,26 @@ public class Player extends JFrame {
 
     public Player(final String playername, int i) {
         this.playername = playername;
-
+        player = this;
         // Frame erstellen
         window = new JFrame(playername);
         window.setSize(200, 190);
         set = new JButton("SET");
-        set.addActionListener(new ButtonL());
+        
+        //set.addActionListener(new ButtonL());
+        set.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                Design.setPlayer(player);
+            };
+        });
         end = new JButton("End");
         set.setFont(new Font("Lucida Grande", Font.PLAIN, 48));
         set.setPreferredSize(new Dimension(201, 107));
         end.setPreferredSize(new Dimension(75, 29));
 
         // Label erstellen
-        sets = new JLabel("SET's:");
-        zahl = new JLabel("zahl");
+        sets = new JLabel("SETs:  ");
+        zahl = new JLabel("0");
 
         // Container erstellen für BorderLayout
         unten = new Container();
@@ -79,23 +86,35 @@ public class Player extends JFrame {
     public String getPlayerName() {
         return this.playername;
     }
+
+    public int getScore() {
+        return score;
+    }
+    
     public void scoreIncrease(){
         score++;
+        zahl.setText(String.valueOf(score));
     }
     public void scoreDecrease(){
         score--;
+        zahl.setText(String.valueOf(score));
     }
+    
+    
+    
+    
 
-   private class ButtonL implements ActionListener{
+//   private class ButtonL implements ActionListener{
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            
+//           Design.setPlayer();
+//            
+//     
+//        }
+//
+//}
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            
-           //Design.setPlayer(this);
-            
-     
-        }
-
-}
 }
 
