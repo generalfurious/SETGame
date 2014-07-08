@@ -13,6 +13,8 @@ package main;
 import com.sun.glass.ui.MenuBar;
 import com.sun.java.accessibility.AccessBridge;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -99,6 +101,9 @@ public class Design extends JFrame implements Runnable{
       menuItemFileLoad       = new JMenuItem("Load");
       menuItemFileExit       = new JMenuItem("Exit");
       menuItemHelpShowManual = new JMenuItem("Show Manual");
+      
+      //registry by FileListener
+      menuItemFileSave.addActionListener(new MenuBarListener());
       
       
       menuFile.add(menuItemFileLoad);
@@ -317,6 +322,26 @@ public class Design extends JFrame implements Runnable{
         }
         
     
+    }
+    
+    private class MenuBarListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+            //Listens to Sub-Menu "Save"
+            if(e.getSource() == Design.this.menuItemFileSave) {}
+            
+            //Listens to Sub-Menu "Load"
+            else if(e.getSource() == Design.this.menuItemFileLoad) {}
+            
+            //Listens to Sub-Menu "Exit"
+            else if(e.getSource() == Design.this.menuItemFileExit) {}
+            
+            //Listens to Sub-Menu "Help-ShowManual"
+            else if(e.getSource() == Design.this.menuItemHelpShowManual) {}
+            
+        }
     }
     
     public static void main(String[] args) throws InterruptedException {
