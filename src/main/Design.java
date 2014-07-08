@@ -10,6 +10,8 @@ package main;
  *
  *
  */
+import com.sun.glass.ui.MenuBar;
+import com.sun.java.accessibility.AccessBridge;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -21,6 +23,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -50,6 +55,21 @@ public class Design extends JFrame implements Runnable{
     private int von = 1;
     private int bis = 3;
     int size;
+    
+    
+  //Menubar reference variables declaration
+    JMenuBar menuBar  = null;
+    JMenu menuFile    = null;
+    JMenu menuHelp    = null;
+    JMenu menuFileNew = null;
+    
+    //Submenu reference variable declaration
+    JMenuItem menuItemFileLoad   = null;
+    JMenuItem menuItemFileSave   = null;
+    JMenuItem menuItemFileExit   = null;
+    
+    JMenuItem menuItemHelpShowManual = null;
+    
 ///Standardkonsruktor	
     public Design() throws InterruptedException {
     ///JFrame ... (1)
@@ -64,18 +84,42 @@ public class Design extends JFrame implements Runnable{
         this.setFocusable(true);
         this.container = new JPanel();
       
-    //    
-        
+    ///Menüleiste
+      menuBar = new JMenuBar();
+        //Hinzufügen von Menüs
+        menuFile = new JMenu("File");
+	menuHelp = new JMenu("Help");
+	
+      menuBar.add(menuFile);
+      menuBar.add(menuHelp);
+      
+      
+      //Add menu entries into in FileMenu
+      menuItemFileSave       = new JMenuItem("Save");
+      menuItemFileLoad       = new JMenuItem("Load");
+      menuItemFileExit       = new JMenuItem("Exit");
+      menuItemHelpShowManual = new JMenuItem("Show Manual");
+      
+      
+      menuFile.add(menuItemFileLoad);
+      menuFile.add(menuItemFileSave);
+      menuFile.add(menuItemFileExit);
+      menuHelp.add(menuItemHelpShowManual);
+      
+      
         
     ///JPanel ...
         //Hier werden JPanels erstellt und gleichzeit an MausListener registriert
         this.createJPanels();
     
     ///JFrame ... (2)    
-        //JPanels zum Frame hinzufügen
+        //JPanels is adding in the following Method
         this.showCards();
 
         //this.setTime();   //Zeigt die Uhrzeit an,
+        
+        
+        
         
         
     }//Konstruktor wird geschlossen
@@ -133,9 +177,11 @@ public class Design extends JFrame implements Runnable{
             
             x_Achse += 130;														//#6
            
-            this.add(scrollPane);
+        //Add components into Frame    
+            this.setJMenuBar(menuBar);
             this.add(JPanelList.get(i));
-       
+              
+
         }//for(int i;...;...) closing
        this.setSize(x_Achse + 15 , this.getHeight());   //Hier wird der JFrame noch einmal je nach Bedarf gezeichnet
        this.repaint();
@@ -262,7 +308,7 @@ public class Design extends JFrame implements Runnable{
     //        this.repaint();
     }
     
-    public void setBorder(ArrayList<Card> cards) {
+    public  void setBorder(ArrayList<Card> cards) {
         
         for (int i = 0; i < Deck.displayed.size(); i++) {
             if(Deck.displayed.get(i).getIcon() == cards.get(i).getIcon()) {
