@@ -91,7 +91,7 @@ public class Player extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             
-            Design.setPlayer(this);
+           //Design.setPlayer(this);
             
      
         }
