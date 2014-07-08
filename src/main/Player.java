@@ -92,6 +92,7 @@ public class Player extends JFrame {
         public void actionPerformed(ActionEvent e) {
             
             Design.setPlayer(this);
+            
      
         }
 
