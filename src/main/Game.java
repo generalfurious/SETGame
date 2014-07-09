@@ -13,15 +13,18 @@ public class Game {
     static ArrayList<Player> playerList;
     static ArrayList<Integer> winnersList;
     static int score, player;
+    static ArrayList<Computer> computer;
+    static Design design;
     public Game(ArrayList<String> symbol, ArrayList<String> color, String difficulty) throws RemoteException, InterruptedException{
         new Deck(symbol, color);
-        new Design();
-        new Computer(difficulty).start();
+        design = new Design();
+        computer.add(new Computer(design, difficulty));
+        computer.get(0).start();
     }
 
     public Game(ArrayList<String> symbol, ArrayList<String> color, int players) throws InterruptedException, IOException, ClassNotFoundException{
         new Deck(symbol, color);
-        new Design();
+        design = new Design();
         playerList = new ArrayList<>();
         for(int i=1;i<=players;i++){
             playerList.add(new Player(i));
@@ -66,20 +69,27 @@ public class Game {
         ArrayList<ArrayList> list = new ArrayList<>();
         list.add(Deck.deck);
         list.add(Deck.displayed);
+        list.add(playerList);
+        list.add(computer);
         oos.writeObject(list); // write MenuArray to ObjectOutputStream
         oos.close();
         JOptionPane.showMessageDialog(null, "Game saved.");
         
+        
+        
     }
     
-    public static void loadGame(String filePath) throws IOException, ClassNotFoundException{
+    public static void loadGame(String filePath) throws IOException, ClassNotFoundException, InterruptedException{
 
         FileInputStream fis = new FileInputStream(filePath);
         ObjectInputStream ois = new ObjectInputStream(fis);
         ArrayList<ArrayList> list = (ArrayList<ArrayList>) ois.readObject();
-        ArrayList<Card> cards = list.get(0);
-        System.out.println(cards.get(0).getIcon());
+        Deck.setDeck(list.get(0));
+        Deck.setDisplayed(list.get(1));
+        playerList = list.get(2);
+        computer = list.get(3);
         
         JOptionPane.showMessageDialog(null, "Game loaded.");
+        design.showCards();
     }
 }

@@ -294,10 +294,14 @@ public class Design extends JFrame implements Runnable {
     }
 
     public void setBorder(ArrayList<Card> cards) {
-
+        System.out.println(cards.size());
+        
         for (int i = 0; i < Deck.displayed.size(); i++) {
-            if (Deck.displayed.get(i).getIcon() == cards.get(i).getIcon()) {
-                JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+            for(int j=0;j<3;j++){
+                if (Deck.displayed.get(i) == cards.get(j)) {
+                    System.out.println(i);
+                    JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+                }
             }
         }
 
@@ -319,6 +323,7 @@ public class Design extends JFrame implements Runnable {
                         Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } //Listens to Sub-Menu "Load"
+            }
                 else if (e.getSource() == Design.this.menuItemFileLoad) {
                     System.out.println("load");
                     fileChooser = new JFileChooser();
@@ -326,7 +331,7 @@ public class Design extends JFrame implements Runnable {
                         try {
                             Game.loadGame(String.valueOf(fileChooser.getSelectedFile()));
                             // save to file
-                        } catch (IOException | ClassNotFoundException ex) {
+                        } catch (IOException | ClassNotFoundException | InterruptedException ex) {
                             Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
@@ -336,7 +341,7 @@ public class Design extends JFrame implements Runnable {
                 } //Listens to Sub-Menu "Help-ShowManual"
             }
         }
-    }
+    
     public static void main(String[] args) throws InterruptedException {
     }
 }

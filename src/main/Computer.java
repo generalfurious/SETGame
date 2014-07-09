@@ -7,10 +7,11 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Computer extends Thread {
-
-    int min, max;
-
-    Computer(String difficulty) {
+    Design design;
+    int min, max, score=0;
+    ArrayList<Card> found;
+    
+    Computer(Design obj, String difficulty) {
         if (difficulty.equals("easy")) {
             min = 20000;
             max = 40000;
@@ -18,6 +19,8 @@ public class Computer extends Thread {
             min = 10000;
             max = 20000;
         }
+        design = obj;
+        found = new ArrayList<>();
     }
 
     public void run() {
@@ -25,11 +28,16 @@ public class Computer extends Thread {
             try {
                 int random = new Random().nextInt(max - min) + min;
                 sleep(random);
-                ArrayList<Card> found = Deck.findSet();
+                found.clear();
+                found = Deck.findSet();
+                if(found.isEmpty())
+                    Game.endGame();
                 JOptionPane.showMessageDialog(null,"The Computer has found a Set!");
-//                Design.setBorder(found);
+                design.setBorder(found);
                 sleep(3000);
                 Deck.replaceCards(found);
+                score++;
+                design.showCards();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Computer.class.getName()).log(Level.SEVERE, null, ex);
             }

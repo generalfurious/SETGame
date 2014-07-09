@@ -108,20 +108,7 @@ public class Player extends JFrame {
     }
     
     
-    
-    
-
-//   private class ButtonL implements ActionListener{
-//
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            
-//           Design.setPlayer();
-//            
-//     
-//        }
-//
-//}
+   
 
 }
 

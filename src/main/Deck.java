@@ -100,21 +100,25 @@ public class Deck { // Responsible for the deck of cards and the cards which are
     }
 
     public static void replaceCards(ArrayList<Card> remove) { //Removes a Card
-        if (Deck.displayed.size() == 12) {
-            for (Card oldCard : remove) {
+        if (deck.size() != 0) {
+            if (displayed.size() == 12) {
                 for (int i = 0; i < displayed.size(); i++) {
-                    if (displayed.get(i) == oldCard) {
-                        random = new Random().nextInt(displayed.size()); // Create a random number(0, size+1)
-                        displayed.set(i, deck.get(random));
-                        deck.remove(random);
+                    for (Card oldCard : remove) {
+                        if (displayed.get(i) == oldCard) {
+                            random = new Random().nextInt(deck.size()); // Create a random number(0, size+1)
+                            displayed.set(i, deck.get(random));
+                            deck.remove(random);
+                        }
                     }
                 }
+            } else {
+                removeCards(remove);
             }
-        }else{
-            removeCards(remove);
-        }
-        fillDeck();
+            fillDeck();
 
+        } else {
+            Game.endGame();
+        }
     }
 
     public static void removeCards(ArrayList<Card> remove) {
