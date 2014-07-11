@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class IntroGame extends javax.swing.JFrame {
-
+    //f
     ArrayList<String> color = new ArrayList<>();
     ArrayList<String> symbol = new ArrayList<>();
     String checkcolor;
