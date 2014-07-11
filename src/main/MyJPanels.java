@@ -102,8 +102,6 @@ class MyJPanels extends JPanel {
                 this.add(label, BorderLayout.CENTER);
             }
             
-            System.out.println(label.getName() +" " +this.counter + " " +number);
-            
             
         }
     }

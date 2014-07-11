@@ -6,23 +6,19 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
+import javax.swing.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.*;
 
-public class Player extends JFrame {
+public class Player extends JFrame implements Serializable {
 
-    private int anzahl;
     Player player;
-    int score = 0;
+    int playerNumber, score = 0;
     JFrame window;
-    JButton set;
-    JButton end;
-    JLabel sets;
-    JLabel zahl;
-    Container unten;
-    Container oben;
-    int playerNumber;
+    JButton set, end;
+    JLabel sets, zahl;
+    Container unten, oben;
     private Design design = null;
     
 
@@ -99,6 +95,11 @@ public class Player extends JFrame {
         return score;
     }
     
+    public void setScore(int score) {
+        this.score = score;
+        zahl.setText(String.valueOf(score));
+    }
+    
     public void scoreIncrease(){
         score++;
         zahl.setText(String.valueOf(score));
@@ -108,7 +109,9 @@ public class Player extends JFrame {
         zahl.setText(String.valueOf(score));
     }
     
-    
+    public void closeWindows(){
+        window.dispose();
+    }
     
     
 

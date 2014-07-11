@@ -116,9 +116,10 @@ public class Deck { // Responsible for the deck of cards and the cards which are
             }
             fillDeck();
 
-        } else {
-            Game.endGame();
         }
+        if(displayed.size() == 0)
+            Game.endGame();
+        
     }
 
     public static void removeCards(ArrayList<Card> remove) {

@@ -542,6 +542,8 @@ catch (javax.swing.UnsupportedLookAndFeelException ex) {
                             // save to file
                         } catch (IOException | ClassNotFoundException ex) {
                             Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 } //Listens to Sub-Menu "Exit"

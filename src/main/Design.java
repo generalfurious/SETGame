@@ -1,15 +1,5 @@
 package main;
 
-/*
- * Author: Ramazan Cinardere
- */
-/**
- * K O M M E N T A R E (#...)
- *
- * #1: #2:
- *
- *
- */
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -57,6 +47,7 @@ public class Design extends JFrame implements Runnable {
     private JPanel container = null;
 
     private int zahler = 0;                      //#3
+    boolean computer = false;
     public int x_Achse = 5;			//#4
     public int y_Achse = 5;			//#5
     private int number;
@@ -72,7 +63,6 @@ public class Design extends JFrame implements Runnable {
     private JMenuItem menuItemFileLoad = null;
     private JMenuItem menuItemFileSave = null;
     private JMenuItem menuItemFileExit = null;
-
 
 ///Standardkonsruktor	
     public Design() throws InterruptedException {
@@ -124,7 +114,7 @@ public class Design extends JFrame implements Runnable {
 
 ///Klassen Methoden	
     public void createJPanels() {
-        
+
         JPanelList.clear();
         for (int i = 0; i <= Deck.displayed.size(); i++) {
 
@@ -132,10 +122,10 @@ public class Design extends JFrame implements Runnable {
             JPanelList.get(i).addMouseListener(new MausListener());
 
         }
-    }   
+    }
 
     public void showCards() throws InterruptedException {
-        for(int i=0; i<JPanelList.size();i++){
+        for (int i = 0; i < JPanelList.size(); i++) {
             this.remove(JPanelList.get(i));
         }
         createJPanels();
@@ -182,12 +172,13 @@ public class Design extends JFrame implements Runnable {
             //Add components into Frame    
             this.setJMenuBar(menuBar);
             this.add(JPanelList.get(i));
-            
 
         }//for(int i;...;...) closing
         this.setSize(x_Achse + 15, this.getHeight());   //Hier wird der JFrame noch einmal je nach Bedarf gezeichnet
         this.validate();
         this.repaint();
+
+        Design.this.setEnabled(false);
 
     }//Method closing
 
@@ -195,14 +186,28 @@ public class Design extends JFrame implements Runnable {
         x_Achse = 5;
     }
 
-    public void setPlayer(Player obj){
+    public void setPlayer(Player obj) {
         player = obj;
-        if(player != null) {
-        	this.setEnabled(true);
+
+        if (player != null) {
+            this.setEnabled(true);
+        } else {
+            this.setEnabled(false);
         }
-        
+
     }
-    
+
+    public void setComputer() {
+        computer = true;
+        if (computer != false) {
+            this.setEnabled(true);
+        }
+    }
+
+    public static Player getPlayer() {
+        return player;
+    }
+
     @Override
     public void run() {
         while (true) {
@@ -224,10 +229,10 @@ public class Design extends JFrame implements Runnable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+
             st = new StringTokenizer(e.getComponent().getName(), " ");
 
             //cards.add((MyJPanels) e.getComponent());
-
             while (st.hasMoreTokens()) {
                 try {
                     int a = Integer.parseInt(st.nextToken());
@@ -245,16 +250,14 @@ public class Design extends JFrame implements Runnable {
                         if (Deck.isSet(clicked.get(0), clicked.get(1), clicked.get(2))) {
                             JOptionPane.showMessageDialog(null, "Congratulations! This is a Set");
                             Deck.replaceCards(clicked);
-                            showCards();
                             player.scoreIncrease();
                         } else {
                             JOptionPane.showMessageDialog(null, "That isn't a Set!");
-                            showCards();
                             player.scoreDecrease();
                         }
-                        Design.this.setEnabled(false);
+                        player = null;
                         clicked.clear(); //Karten werden gelÃ¶scht
-                        System.out.println(player.getScore());
+                        showCards();
                     }//if closing
                 } catch (NumberFormatException | HeadlessException ex) {
                 } catch (InterruptedException ex) {
@@ -290,8 +293,6 @@ public class Design extends JFrame implements Runnable {
 
         for (int i = 0; i < Deck.displayed.size(); i++) {
 
-            System.out.println("display: " + Deck.displayed.get(i).getIcon() + " Card: " + a.getIcon());
-
             if (Deck.displayed.get(i).getIcon() == a.getIcon()) {
                 this.remove(JPanelList.get(i));
                 this.repaint();
@@ -305,11 +306,12 @@ public class Design extends JFrame implements Runnable {
     public void setBorder(ArrayList<Card> cards) {
 
         for (int i = 0; i < Deck.displayed.size(); i++) {
-            if (Deck.displayed.get(i).getIcon() == cards.get(i).getIcon()) {
-                JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+            for (int j = 0; j < 3; j++) {
+                if (Deck.displayed.get(i) == cards.get(j)) {
+                    JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+                }
             }
         }
-
     }
 
     private class MenuBarListener implements ActionListener {
@@ -325,29 +327,23 @@ public class Design extends JFrame implements Runnable {
                         Game.saveGame(String.valueOf(fileChooser.getSelectedFile()));
                         // save to file
                     } catch (IOException ex) {
-                        Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println(ex.getMessage());
                     }
                 } //Listens to Sub-Menu "Load"
-                else if (e.getSource() == menuItemFileLoad) {
-                    System.out.println("load");
-                    fileChooser = new JFileChooser();
-                    if (fileChooser.showOpenDialog(fileChooser) == JFileChooser.APPROVE_OPTION) {
-                        try {
-                            Game.loadGame(String.valueOf(fileChooser.getSelectedFile()));
-                            // save to file
-                        } catch (IOException | ClassNotFoundException ex) {
-                            Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+            } else if (e.getSource() == menuItemFileLoad) {
+                fileChooser = new JFileChooser();
+                if (fileChooser.showOpenDialog(fileChooser) == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        Game.loadGame(String.valueOf(fileChooser.getSelectedFile()));
+                        // save to file
+                    } catch (IOException | ClassNotFoundException | InterruptedException ex) {
+                        Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } //Listens to Sub-Menu "Exit"
-                else if (e.getSource() == menuItemFileExit) {
-                	System.out.println(e.getSource());
-                    System.exit(0);
-                } //Listens to Sub-Menu "Help-ShowManual"
-            }
+                }
+            } //Listens to Sub-Menu "Exit"
+            else if (e.getSource() == menuItemFileExit) {
+                System.exit(0);
+            } //Listens to Sub-Menu "Help-ShowManual"
         }
-    }
-   
-    public static void main(String[] args) throws InterruptedException {
     }
 }
