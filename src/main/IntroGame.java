@@ -32,7 +32,6 @@ public class IntroGame extends javax.swing.JFrame {
         against.add(jRadioPlayer);
         jLabelBild.setIcon(new ImageIcon("src/main/SET_logo.png"));
         jRadioPlayer.setSelected(true);
-        Sound.applaus.play();
     }
 
     @SuppressWarnings("unchecked")
