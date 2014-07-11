@@ -7,27 +7,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 public class Game {
     static ArrayList<Player> playerList;
     static ArrayList<Integer> winnersList;
     static int score, player;
-    static ArrayList<Computer> computer;
-    static Design design;
     public Game(ArrayList<String> symbol, ArrayList<String> color, String difficulty) throws RemoteException, InterruptedException{
         new Deck(symbol, color);
-        design = new Design();
-        computer.add(new Computer(design, difficulty));
-        computer.get(0).start();
+        new Design();
+        new Computer(difficulty).start();
     }
-
+   
     public Game(ArrayList<String> symbol, ArrayList<String> color, int players) throws InterruptedException, IOException, ClassNotFoundException{
         new Deck(symbol, color);
-        design = new Design();
+        Design d = new Design();
         playerList = new ArrayList<>();
         for(int i=1;i<=players;i++){
-            playerList.add(new Player(i));
+            playerList.add(new Player(i,d));
         }
 
         //saveGame("savefile.set");
@@ -69,27 +67,20 @@ public class Game {
         ArrayList<ArrayList> list = new ArrayList<>();
         list.add(Deck.deck);
         list.add(Deck.displayed);
-        list.add(playerList);
-        list.add(computer);
         oos.writeObject(list); // write MenuArray to ObjectOutputStream
         oos.close();
         JOptionPane.showMessageDialog(null, "Game saved.");
         
-        
-        
     }
     
-    public static void loadGame(String filePath) throws IOException, ClassNotFoundException, InterruptedException{
+    public static void loadGame(String filePath) throws IOException, ClassNotFoundException{
 
         FileInputStream fis = new FileInputStream(filePath);
         ObjectInputStream ois = new ObjectInputStream(fis);
         ArrayList<ArrayList> list = (ArrayList<ArrayList>) ois.readObject();
-        Deck.setDeck(list.get(0));
-        Deck.setDisplayed(list.get(1));
-        playerList = list.get(2);
-        computer = list.get(3);
+        ArrayList<Card> cards = list.get(0);
+        System.out.println(cards.get(0).getIcon());
         
         JOptionPane.showMessageDialog(null, "Game loaded.");
-        design.showCards();
     }
 }

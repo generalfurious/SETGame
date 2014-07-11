@@ -23,11 +23,12 @@ public class Player extends JFrame {
     Container unten;
     Container oben;
     int playerNumber;
-    
+    private Design design = null;
     
 
-    public Player(final int i) {
+    public Player(final int i, final Design design) {
         this.playerNumber = i;
+        this.design = design;
         player = this;
         // Frame erstellen
         window = new JFrame("Player " + playerNumber);
@@ -37,7 +38,7 @@ public class Player extends JFrame {
         //set.addActionListener(new ButtonL());
         set.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                Design.setPlayer(player);
+                design.setPlayer(player);
             };
         });
         end = new JButton("End");
@@ -54,7 +55,7 @@ public class Player extends JFrame {
         sets = new JLabel("SETs:  ");
         zahl = new JLabel("0");
 
-        // Container erstellen für BorderLayout
+        // Container erstellen fÃ¼r BorderLayout
         unten = new Container();
         oben = new Container();
 
@@ -63,13 +64,13 @@ public class Player extends JFrame {
         unten.setLayout(new BorderLayout());
         oben.setLayout(new BorderLayout());
 
-        // Buttons und Label zum Container hinzufügen 
+        // Buttons und Label zum Container hinzufÃ¼gen 
         oben.add(set, BorderLayout.CENTER);
         unten.add(sets, BorderLayout.WEST);
         unten.add(zahl, BorderLayout.CENTER);
         unten.add(end, BorderLayout.EAST);
 
-        // Container zum Fenster hinzufügen
+        // Container zum Fenster hinzufÃ¼gen
         window.add(oben, BorderLayout.NORTH);
         window.add(unten, BorderLayout.SOUTH);
 
@@ -108,7 +109,20 @@ public class Player extends JFrame {
     }
     
     
-   
+    
+    
+
+//   private class ButtonL implements ActionListener{
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            
+//           Design.setPlayer();
+//            
+//     
+//        }
+//
+//}
 
 }
 

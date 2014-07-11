@@ -43,7 +43,7 @@ class MyJPanels extends JPanel {
             return this.name;
         }    
 
-        //Überladene Methoden
+        //Ãœberladene Methoden
         public void setInto(JLabel label) {
              
                 this.setLayout(new BorderLayout());
@@ -51,23 +51,42 @@ class MyJPanels extends JPanel {
                 this.validate();
         }
         
-        public void setInto(JLabel label, int number) {
+        public void setInto(JLabel label, int number, Card card) {
             
-            this.counter+=1;
-            
-            int pos_x_axis  = (int) Math.sqrt(Design.PANEL_WIDTH) /3;
-            int pos_y_axis_upper_area    = Design.PANEL_HEIGHT / 4;
-            int pos_y_axis_lower_area    = (Design.PANEL_HEIGHT / 2) + (pos_y_axis_upper_area/2);
+        	int pos_x_axis = (int) Math.sqrt(Design.PANEL_WIDTH) /3;				//X-Achse
+        	int pos_y_axis_upper_area =  Design.PANEL_HEIGHT / 4;
+        	int pos_y_axis_lower_area =  (Design.PANEL_HEIGHT / 2) + (pos_y_axis_upper_area/2);
+        	
+        	if(card.getSymbol().equals("Hexagon")) {
+        		
+        	}
+        	else if(card.getSymbol().equals("Oval")) {
+        		if(number == 2) {
+        			pos_y_axis_upper_area    = Design.PANEL_HEIGHT / 4;
+                    pos_y_axis_lower_area    = (Design.PANEL_HEIGHT / 2) + (pos_y_axis_upper_area/2);
+        		}
+        		else if(number == 3) {
+        			pos_y_axis_upper_area    = Design.PANEL_HEIGHT / 4;
+                    pos_y_axis_lower_area    = (Design.PANEL_HEIGHT / 2) + (pos_y_axis_upper_area/2);
+        		}
+            }
+        	else if(card.getSymbol().equals("Rectangle")) {
+        		
+        	}
+        	else if(card.getSymbol().equals("Wave")) {}
+        	else if(card.getSymbol().equals("Heart")) {}
+        	else {}
+        	
+           
+            this.counter+=1;												//
             
             if (number == 2) {
                 
                 if (this.counter == 1) {
-                    this.setLayout(null);
-                    //this.setLayout(new BorderLayout());
-                    //this.add(label,BorderLayout.NORTH);
                     
+                	this.setLayout(null);
                     label.setSize((Card.average_width) ,(Card.max_height));
-                    label.setLocation(pos_x_axis,pos_y_axis_upper_area);      //Die Wurzel von x ergibt den y-wert /2 damit der wert in der mitte liegen soll
+                    label.setLocation(pos_x_axis, pos_y_axis_upper_area);     
                     this.add(label);
                     this.validate();                    
                    
@@ -77,11 +96,13 @@ class MyJPanels extends JPanel {
                     this.add(label);
                     this.validate();
                 }
-            } else {
+            } else if(number == 3) {
+            	
                 //this.setLayout(new BorderLayout());
                 this.add(label, BorderLayout.CENTER);
             }
-
+            
+            System.out.println(label.getName() +" " +this.counter + " " +number);
             
             
         }

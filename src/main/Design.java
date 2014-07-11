@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -45,8 +47,8 @@ public class Design extends JFrame implements Runnable {
     public ArrayList<Icon> IconList = new ArrayList<>();
     public ArrayList<Card> clicked = new ArrayList<>();
     public ArrayList<MyJPanels> cards = new ArrayList<>();      //Speichert die geklickten JPanels, siehe in Mouslistener
-    JFileChooser fileChooser;
-    static Player player;
+    public JFileChooser fileChooser;
+    public static Player player;
 
     public static final int PANEL_WIDTH = 125;
     public static final int PANEL_HEIGHT = 230;
@@ -60,16 +62,16 @@ public class Design extends JFrame implements Runnable {
     private int number;
     private int von = 1;
     private int bis = 3;
-    int size;
+    public int size;
 
     //Menubar reference variables declaration
-    JMenuBar menuBar = null;
-    JMenu menuFile = null;
+    private JMenuBar menuBar = null;
+    private JMenu menuFile = null;
 
     //Submenu reference variable declaration
-    JMenuItem menuItemFileLoad = null;
-    JMenuItem menuItemFileSave = null;
-    JMenuItem menuItemFileExit = null;
+    private JMenuItem menuItemFileLoad = null;
+    private JMenuItem menuItemFileSave = null;
+    private JMenuItem menuItemFileExit = null;
 
 
 ///Standardkonsruktor	
@@ -78,25 +80,27 @@ public class Design extends JFrame implements Runnable {
         //main frame
         super("Set");
         this.setLayout(null);
+        this.setUndecorated(true);
         this.setVisible(true);
-        this.setSize(700, 720);									//setSize(Width,Height); 
+        this.setSize(700, 725);									//setSize(Width,Height); 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
         this.setLocationRelativeTo(null);
         this.setFocusable(true);
         this.container = new JPanel();
 
-        ///Menüleiste
+        ///MenÃ¼leiste
         menuBar = new JMenuBar();
-        //Hinzufügen von Menüs
+        //HinzufÃ¼gen von MenÃ¼s
         menuFile = new JMenu("File");
+        menuFile.setMnemonic(KeyEvent.VK_F);
 
         menuBar.add(menuFile);
 
         //Add menu entries into in FileMenu
-        menuItemFileSave = new JMenuItem("Save");
-        menuItemFileLoad = new JMenuItem("Load");
-        menuItemFileExit = new JMenuItem("Exit");
+        menuItemFileSave = new JMenuItem("Save", KeyEvent.VK_S);
+        menuItemFileLoad = new JMenuItem("Load", KeyEvent.VK_L);
+        menuItemFileExit = new JMenuItem("Exit", KeyEvent.VK_E);
 
         //registry by FileListener
         menuItemFileSave.addActionListener(new MenuBarListener());
@@ -114,7 +118,7 @@ public class Design extends JFrame implements Runnable {
         ///JFrame ... (2)    
         //JPanels is adding in the following Method
         this.showCards();
-
+        this.setEnabled(false);
         //this.setTime();   //Zeigt die Uhrzeit an,
     }//Konstruktor wird geschlossen
 
@@ -163,13 +167,13 @@ public class Design extends JFrame implements Runnable {
                     JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())));
                     break;
                 case 2:
-                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())), number);
-                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())), number);
+                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())), number, Deck.displayed.get(i));
+                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())), number, Deck.displayed.get(i));
                     break;
                 case 3:
-                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())), number);
-                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())), number);
-                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())), number);
+                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())), number, Deck.displayed.get(i));
+                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())), number, Deck.displayed.get(i));
+                    JPanelList.get(i).setInto(new JLabel(new ImageIcon(Deck.displayed.get(i).getIcon())), number, Deck.displayed.get(i));
                     break;
             }
 
@@ -191,8 +195,12 @@ public class Design extends JFrame implements Runnable {
         x_Achse = 5;
     }
 
-    public static void setPlayer(Player obj){
+    public void setPlayer(Player obj){
         player = obj;
+        if(player != null) {
+        	this.setEnabled(true);
+        }
+        
     }
     
     @Override
@@ -244,7 +252,8 @@ public class Design extends JFrame implements Runnable {
                             showCards();
                             player.scoreDecrease();
                         }
-                        clicked.clear(); //Karten werden gelöscht
+                        Design.this.setEnabled(false);
+                        clicked.clear(); //Karten werden gelÃ¶scht
                         System.out.println(player.getScore());
                     }//if closing
                 } catch (NumberFormatException | HeadlessException ex) {
@@ -294,14 +303,10 @@ public class Design extends JFrame implements Runnable {
     }
 
     public void setBorder(ArrayList<Card> cards) {
-        System.out.println(cards.size());
-        
+
         for (int i = 0; i < Deck.displayed.size(); i++) {
-            for(int j=0;j<3;j++){
-                if (Deck.displayed.get(i) == cards.get(j)) {
-                    System.out.println(i);
-                    JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
-                }
+            if (Deck.displayed.get(i).getIcon() == cards.get(i).getIcon()) {
+                JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
             }
         }
 
@@ -313,7 +318,7 @@ public class Design extends JFrame implements Runnable {
         public void actionPerformed(ActionEvent e) {
 
             //Listens to Sub-Menu "Save"
-            if (e.getSource() == Design.this.menuItemFileSave) {
+            if (e.getSource() == menuItemFileSave) {
                 fileChooser = new JFileChooser();
                 if (fileChooser.showSaveDialog(fileChooser) == JFileChooser.APPROVE_OPTION) {
                     try {
@@ -323,25 +328,26 @@ public class Design extends JFrame implements Runnable {
                         Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } //Listens to Sub-Menu "Load"
-            }
-                else if (e.getSource() == Design.this.menuItemFileLoad) {
+                else if (e.getSource() == menuItemFileLoad) {
                     System.out.println("load");
                     fileChooser = new JFileChooser();
                     if (fileChooser.showOpenDialog(fileChooser) == JFileChooser.APPROVE_OPTION) {
                         try {
                             Game.loadGame(String.valueOf(fileChooser.getSelectedFile()));
                             // save to file
-                        } catch (IOException | ClassNotFoundException | InterruptedException ex) {
+                        } catch (IOException | ClassNotFoundException ex) {
                             Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 } //Listens to Sub-Menu "Exit"
-                else if (e.getSource() == Design.this.menuItemFileExit) {
+                else if (e.getSource() == menuItemFileExit) {
+                	System.out.println(e.getSource());
                     System.exit(0);
                 } //Listens to Sub-Menu "Help-ShowManual"
             }
         }
-    
+    }
+   
     public static void main(String[] args) throws InterruptedException {
     }
 }

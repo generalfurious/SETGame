@@ -1,5 +1,8 @@
 package main;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -7,11 +10,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 public class IntroGame extends javax.swing.JFrame {
 
-    ArrayList<String> color = new ArrayList<>();
+     ArrayList<String> color = new ArrayList<>();
     ArrayList<String> symbol = new ArrayList<>();
     String checkcolor;
     String oval, wave, heart, hexagon, rectangle, star;
@@ -20,10 +27,46 @@ public class IntroGame extends javax.swing.JFrame {
     String normal = "normal";
     int players, player;
 
+     private JFileChooser fileChooser = null;
+    
+    //Menubar reference variables declaration
+    JMenuBar menuBar = null;
+    JMenu menuFile = null;
+
+    //Submenu reference variable declaration
+    JMenuItem menuItemFileLoad = null;
+    JMenuItem menuItemFileSave = null;
+    JMenuItem menuItemFileExit = null;
+    
     ButtonGroup group = new ButtonGroup();
     ButtonGroup against = new ButtonGroup();
 
+    
+
     public IntroGame() {
+        
+         menuBar = new JMenuBar();
+        //HinzufÃ¼gen von MenÃ¼s
+        menuFile = new JMenu("File");
+        menuFile.setMnemonic(KeyEvent.VK_F);
+
+        menuBar.add(menuFile);
+
+        //Add menu entries into in FileMenu
+        menuItemFileSave = new JMenuItem("Save", KeyEvent.VK_S);
+        menuItemFileSave.setEnabled(false);
+        menuItemFileLoad = new JMenuItem("Load", KeyEvent.VK_L);
+        menuItemFileExit = new JMenuItem("Exit", KeyEvent.VK_E);
+
+        //registry by FileListener
+        menuItemFileSave.addActionListener(new MenuBarListener());
+        menuItemFileLoad.addActionListener(new MenuBarListener());
+        menuItemFileExit.addActionListener(new MenuBarListener());
+
+        menuFile.add(menuItemFileSave);
+        menuFile.add(menuItemFileLoad);
+        menuFile.add(menuItemFileExit);
+        
         initComponents();
         setLocationRelativeTo(null);
         group.add(jRadioEasy);
@@ -474,6 +517,41 @@ catch (javax.swing.UnsupportedLookAndFeelException ex) {
             }
         });
     }
+    
+     private class MenuBarListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+
+            //Listens to Sub-Menu "Save"
+            if (e.getSource() == menuItemFileSave) {
+                fileChooser = new JFileChooser();
+                if (fileChooser.showSaveDialog(fileChooser) == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        Game.saveGame(String.valueOf(fileChooser.getSelectedFile()));
+                        // save to file
+                    } catch (IOException ex) {
+                        Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } //Listens to Sub-Menu "Load"
+                else if (e.getSource() == menuItemFileLoad) {
+                    System.out.println("load");
+                    fileChooser = new JFileChooser();
+                    if (fileChooser.showOpenDialog(fileChooser) == JFileChooser.APPROVE_OPTION) {
+                        try {
+                            Game.loadGame(String.valueOf(fileChooser.getSelectedFile()));
+                            // save to file
+                        } catch (IOException | ClassNotFoundException ex) {
+                            Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } //Listens to Sub-Menu "Exit"
+                else if (e.getSource() == menuItemFileExit) {
+                    System.exit(0);
+                } //Listens to Sub-Menu "Help-ShowManual"
+            }
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
