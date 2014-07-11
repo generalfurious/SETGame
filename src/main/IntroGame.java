@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 public class IntroGame extends javax.swing.JFrame {
     //f
+    String a = null;
     ArrayList<String> color = new ArrayList<>();
     ArrayList<String> symbol = new ArrayList<>();
     String checkcolor;
