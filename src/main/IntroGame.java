@@ -30,9 +30,9 @@ public class IntroGame extends javax.swing.JFrame {
         group.add(jRadioNormal);
         against.add(jRadioComputer);
         against.add(jRadioPlayer);
-
-        jLabelBild.setIcon(new ImageIcon("src\\main\\SET_logo.png"));
+        jLabelBild.setIcon(new ImageIcon("src/main/SET_logo.png"));
         jRadioPlayer.setSelected(true);
+        Sound.applaus.play();
     }
 
     @SuppressWarnings("unchecked")
@@ -318,10 +318,9 @@ public class IntroGame extends javax.swing.JFrame {
         }
 
     }
-    private void jButtonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlayActionPerformed
 
-        // Farben
-        if (color.size() == 0) {
+    public void colorCheck() {
+        if (color.isEmpty()) {
             if (jCheckRed.isSelected()) {
                 red = jCheckRed.getText();
                 color.add(red);
@@ -342,9 +341,13 @@ public class IntroGame extends javax.swing.JFrame {
                 green = jCheckGreen.getText();
                 color.add(green);
             }
+
         }
+    }
+
+    public void symbolCheck() {
         // Symbole
-        if (symbol.size() == 0) {
+        if (symbol.isEmpty()) {
             if (jCheckOval.isSelected()) {
                 oval = jCheckOval.getText();
                 symbol.add(oval);
@@ -370,49 +373,57 @@ public class IntroGame extends javax.swing.JFrame {
                 symbol.add(rectangle);
             }
         }
+    }
+
+    public void oneColorCheck() {
         if (jComboColor.getSelectedIndex() > 0) {
             checkcolor = (String) jComboColor.getSelectedItem();
             color.clear();
             color.add(checkcolor);
+        }
+    }
+    private void jButtonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlayActionPerformed
 
-        } else if (color.size() != 3) {
-            JOptionPane.showMessageDialog(null, "Please choose 3 colors.");
+        colorCheck();
+        symbolCheck();
+        oneColorCheck();
+
+        if (color.size() != 3 || symbol.size() != 3) {
             color.clear();
-        }
-        if (symbol.size() != 3) {
-            JOptionPane.showMessageDialog(null, "Please choose 3 kinds of symbols.");
             symbol.clear();
-        }
-
-        // Player vs. Player oder Computer
-        if (jRadioPlayer.isSelected()) {
-            player = jComboPlayers.getSelectedIndex();
-            players = getPlayer(player);
-            try {
-                new Game(symbol, color, players);
-               // dispose();
-            } catch (InterruptedException | IOException | ClassNotFoundException ex) {
-                Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            JOptionPane.showMessageDialog(null, "Please choose 3 colors and 3 symbols or only 1 color.");
         } else {
-                if (!(jRadioEasy.isSelected()) && !(jRadioNormal.isSelected())) {
-                    JOptionPane.showMessageDialog(null, "Please choose a difficulty");
+
+            try {
+                // Player vs. Player oder Computer
+                if (jRadioPlayer.isSelected()) {
+                    player = jComboPlayers.getSelectedIndex();
+                    players = getPlayer(player);
+                    new Game(symbol, color, players);
+                    // dispose();
                 } else {
-                    try {
+                    if (!(jRadioEasy.isSelected()) && !(jRadioNormal.isSelected())) {
+                        JOptionPane.showMessageDialog(null, "Please choose a difficulty");
+                    } else {
+
                         if (jRadioEasy.isSelected()) {
                             new Game(symbol, color, easy);
                             dispose();
                         } else {
                             new Game(symbol, color, normal);
                             dispose();
-                            
-                        }
-                    } catch (RemoteException | InterruptedException ex) {
-                        Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    }
 
+                        }
+
+                    }
                 }
+
+            } catch (RemoteException | InterruptedException ex) {
+                Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException | ClassNotFoundException ex) {
+                Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButtonPlayActionPerformed
 
     private void jCheckRedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckRedActionPerformed
@@ -437,32 +448,21 @@ public class IntroGame extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(IntroGame.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(IntroGame.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(IntroGame.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(IntroGame.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(IntroGame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(IntroGame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(IntroGame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(IntroGame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
