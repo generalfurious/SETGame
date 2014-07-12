@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.JOptionPane;
 
 public class Game {
@@ -14,7 +15,8 @@ public class Game {
     static ArrayList<Player> playerList = new ArrayList<>();
     static ArrayList<Integer> savePlayer;
     static ArrayList<Integer> winnersList;
-    static int score, player;
+    static int score;
+    static int scorepl1, scorepl2, scorepl3, scorepl4, player, i;
     static Design design;
     static Computer computer = null;
 
@@ -35,36 +37,53 @@ public class Game {
     }
 
     public static void endGame() {
-        score = playerList.get(0).getScore();
+        
         winnersList = new ArrayList<>();
 
-        for (int i = 0; i < playerList.size(); i++) {
-            if (score <= playerList.get(i).getScore()) {
-                score = playerList.get(i).getScore();
-            }
-            player = playerList.get(i).getPlayerNumber();
-        }
-        for (int i = 0; i < playerList.size(); i++) {
-            if (playerList.get(i).getScore() == score) {
-                winnersList.add(i);
-            }
-            switch (winnersList.size()) {
-                case 1:
-                    JOptionPane.showMessageDialog(null, "Congratulation Player " + winnersList.get(0) + ". You have the most SETs");
-                case 2:
-                    JOptionPane.showMessageDialog(null, "Congratulation Player " + winnersList.get(0) + " and Player " + winnersList.get(1) + ". You have the most SETs");
-                case 3:
-                    JOptionPane.showMessageDialog(null, "Congratulation Player " + winnersList.get(0) + ", Player " + winnersList.get(1) + " and Player " + winnersList.get(2) + ". You have the most SETs");
-                case 4:
-                    JOptionPane.showMessageDialog(null, "Congratulation Player " + winnersList.get(0) + ", Player " + winnersList.get(1) + ", Player " + winnersList.get(2) + " and Player " + winnersList.get(3) + ". You have the most SETs");
+        for (i = 0; i < playerList.size(); i++) {
+
+            if (i == 0) {
+                scorepl1 = playerList.get(i).getScore();
+                winnersList.add(scorepl1);
+            } else if (i == 1) {
+                scorepl2 = playerList.get(i).getScore();
+                winnersList.add(scorepl2);
+            } else if (i == 2) {
+                scorepl3 = playerList.get(i).getScore();
+                winnersList.add(scorepl3);
+            } else {
+                scorepl4 = playerList.get(i).getScore();
+                winnersList.add(scorepl4);
             }
         }
+        i--;
+        Collections.sort(winnersList);
+
+        if (winnersList.get(i).equals(scorepl1)) {
+            Sound.applaus.play();
+            JOptionPane.showMessageDialog(null, "Congratulation Player 1. You have the most SETs");
+        }
+        if (winnersList.get(i).equals(scorepl2)) {
+            Sound.applaus.play();
+            JOptionPane.showMessageDialog(null, "Congratulation Player 2. You have the most SETs");
+        }
+        if (winnersList.get(i).equals(scorepl3)) {
+            Sound.applaus.play();
+            JOptionPane.showMessageDialog(null, "Congratulation Player 3. You have the most SETs");
+        }
+        if (winnersList.get(i).equals(scorepl4)) {
+            Sound.applaus.play();
+            JOptionPane.showMessageDialog(null, "Congratulation Player 4. You have the most SETs");
+        }
+
         System.exit(0);
     }
 
     public static void saveGame(String filePath) throws IOException {
-
-        FileOutputStream fos = new FileOutputStream(filePath.concat(".set"));
+        if(!filePath.endsWith(".set"))
+            filePath = filePath.concat(".set");
+        
+        FileOutputStream fos = new FileOutputStream(filePath);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         ArrayList<ArrayList> list = new ArrayList<>();
         list.add(Deck.deck);
