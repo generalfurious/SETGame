@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class IntroGame extends javax.swing.JFrame {
+
     //f
     String a = null;
     ArrayList<String> color = new ArrayList<>();
@@ -376,53 +377,90 @@ public class IntroGame extends javax.swing.JFrame {
     }
 
     public void oneColorCheck() {
-        if (jComboColor.getSelectedIndex() > 0) {
-            checkcolor = (String) jComboColor.getSelectedItem();
-            color.clear();
-            color.add(checkcolor);
+        symbolCheck();
+        if(symbol.size() == 3){
+        checkcolor = (String) jComboColor.getSelectedItem();
+        color.clear();
+        color.add(checkcolor);
+
+        try {
+            // Player vs. Player oder Computer
+            if (jRadioPlayer.isSelected()) {
+                player = jComboPlayers.getSelectedIndex();
+                players = getPlayer(player);
+                new Game(symbol, color, players);
+                // dispose();
+            } else {
+                if (!(jRadioEasy.isSelected()) && !(jRadioNormal.isSelected())) {
+                    JOptionPane.showMessageDialog(null, "Please choose a difficulty");
+                } else {
+
+                    if (jRadioEasy.isSelected()) {
+                        new Game(symbol, color, easy);
+                        dispose();
+                    } else {
+                        new Game(symbol, color, normal);
+                        dispose();
+
+                    }
+
+                }
+            }
+
+        } catch (RemoteException | InterruptedException ex) {
+            Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }else{
+        JOptionPane.showMessageDialog(null, "Please choose 3 colors and 3 symbols or only 1 color.");
+        symbol.clear();
         }
     }
     private void jButtonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlayActionPerformed
 
-        colorCheck();
-        symbolCheck();
-        oneColorCheck();
+        if (jComboColor.getSelectedIndex() == 0) {
+            symbolCheck();
+            colorCheck();
 
-        if (color.size() != 3 || symbol.size() != 3) {
-            color.clear();
-            symbol.clear();
-            JOptionPane.showMessageDialog(null, "Please choose 3 colors and 3 symbols or only 1 color.");
-        } else {
+            if (color.size() != 3 || symbol.size() != 3) {
+                color.clear();
+                symbol.clear();
+                JOptionPane.showMessageDialog(null, "Please choose 3 colors and 3 symbols or only 1 color.");
+            } else {
 
-            try {
-                // Player vs. Player oder Computer
-                if (jRadioPlayer.isSelected()) {
-                    player = jComboPlayers.getSelectedIndex();
-                    players = getPlayer(player);
-                    new Game(symbol, color, players);
-                    // dispose();
-                } else {
-                    if (!(jRadioEasy.isSelected()) && !(jRadioNormal.isSelected())) {
-                        JOptionPane.showMessageDialog(null, "Please choose a difficulty");
+                try {
+                    // Player vs. Player oder Computer
+                    if (jRadioPlayer.isSelected()) {
+                        player = jComboPlayers.getSelectedIndex();
+                        players = getPlayer(player);
+                        new Game(symbol, color, players);
+                        // dispose();
                     } else {
-
-                        if (jRadioEasy.isSelected()) {
-                            new Game(symbol, color, easy);
-                            dispose();
+                        if (!(jRadioEasy.isSelected()) && !(jRadioNormal.isSelected())) {
+                            JOptionPane.showMessageDialog(null, "Please choose a difficulty");
                         } else {
-                            new Game(symbol, color, normal);
-                            dispose();
+
+                            if (jRadioEasy.isSelected()) {
+                                new Game(symbol, color, easy);
+                                dispose();
+                            } else {
+                                new Game(symbol, color, normal);
+                                dispose();
+
+                            }
 
                         }
-
                     }
-                }
 
-            } catch (RemoteException | InterruptedException ex) {
-                Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (RemoteException | InterruptedException ex) {
+                    Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException | ClassNotFoundException ex) {
+                    Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+        }else{
+        oneColorCheck();
         }
     }//GEN-LAST:event_jButtonPlayActionPerformed
 
