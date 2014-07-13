@@ -1,5 +1,17 @@
 package main;
 
+/*
+ * Author: Ramazan Cinardere
+ */
+/**
+ * K O M M E N T A R E (#...)
+ *
+ * #1: #2:
+ *
+ *
+ */
+
+
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -9,7 +21,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,61 +38,65 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class Design extends JFrame implements Runnable {
+public class Design extends JFrame {
 ///Klassen ID
-
     private static final long serialVersionUID = 1L;
 
 ///Klassenattribute
     public ArrayList<MyJPanels> JPanelList = new ArrayList<>();
-    public ArrayList<Icon> IconList = new ArrayList<>();
-    public ArrayList<Card> clicked = new ArrayList<>();
-    public ArrayList<MyJPanels> cards = new ArrayList<>();      //Speichert die geklickten JPanels, siehe in Mouslistener
-    public JFileChooser fileChooser;
-    public static Player player;
+    public ArrayList<Icon> IconList 	   = new ArrayList<>();
+    public ArrayList<Card> clickedList     = new ArrayList<>();
+    public ArrayList<Player> playerList    = new ArrayList<>();
+    public JFileChooser fileChooser 	   = null;
+    public Player player 		   		   = null;
 
-    public static final int PANEL_WIDTH = 125;
+    public static final int PANEL_WIDTH  = 125;
     public static final int PANEL_HEIGHT = 230;
 
-    private JScrollPane scrollPane = null;      //
-    private JPanel container = null;
-
-    private int zahler = 0;                      //#3
-    boolean computer = false;
-    public int x_Achse = 5;			//#4
-    public int y_Achse = 5;			//#5
-    private int number;
-    private int von = 1;
-    private int bis = 3;
-    public int size;
+    public int zahler  = 0;                     //#3
+    public int x_Achse = 5;						//#4
+    public int y_Achse = 5;						//#5
+    public int number  = 0;
+    public int von     = 1;
+    public int bis     = 3;
+    public int size    = 0;
 
     //Menubar reference variables declaration
     private JMenuBar menuBar = null;
-    private JMenu menuFile = null;
+    private JMenu menuFile   = null;
 
     //Submenu reference variable declaration
     private JMenuItem menuItemFileLoad = null;
     private JMenuItem menuItemFileSave = null;
     private JMenuItem menuItemFileExit = null;
 
-///Standardkonsruktor	
-    public Design() throws InterruptedException {
-        ///JFrame ... (1)
-        //main frame
-        super("Set");
-        this.setLayout(null);
-        this.setUndecorated(true);
-        this.setVisible(true);
-        this.setSize(700, 725);									//setSize(Width,Height); 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(true);
-        this.setLocationRelativeTo(null);
-        this.setFocusable(true);
-        this.container = new JPanel();
 
-        ///MenÃ¼leiste
-        menuBar = new JMenuBar();
-        //HinzufÃ¼gen von MenÃ¼s
+  ///Standardkonsruktor	
+    public Design() throws InterruptedException {
+    	
+  ///JFrame ... (1)
+        //main frame
+    	super("Set");
+        this.setJFrame();
+    	
+   ///MenüLeiste
+        this.addJMenuBar();
+
+   ///JPanel ...
+        //Hier werden JPanels erstellt und gleichzeit an MausListener registriert
+        this.createJPanels();
+
+  ///JFrame ... (2)    
+        //JPanels is adding in the following Method
+        this.showCards();
+        
+    }//Konstruktor wird geschlossen
+
+  ///Klassen Methoden	
+    
+    public void addJMenuBar() {
+ 	   menuBar = new JMenuBar();
+        //Hinzufügen von Menüs
         menuFile = new JMenu("File");
         menuFile.setMnemonic(KeyEvent.VK_F);
 
@@ -100,37 +115,51 @@ public class Design extends JFrame implements Runnable {
         menuFile.add(menuItemFileSave);
         menuFile.add(menuItemFileLoad);
         menuFile.add(menuItemFileExit);
-
-        ///JPanel ...
-        //Hier werden JPanels erstellt und gleichzeit an MausListener registriert
-        this.createJPanels();
-
-        ///JFrame ... (2)    
-        //JPanels is adding in the following Method
-        this.showCards();
-        this.setEnabled(false);
-        //this.setTime();   //Zeigt die Uhrzeit an,
-    }//Konstruktor wird geschlossen
-
-///Klassen Methoden	
+ }//addJMenuBar
+    
     public void createJPanels() {
-
+        
         JPanelList.clear();
         for (int i = 0; i <= Deck.displayed.size(); i++) {
 
             JPanelList.add(new MyJPanels("panel " + i));
             JPanelList.get(i).addMouseListener(new MausListener());
-
         }
-    }
+    } //createPanels 
+    
+    public void removeCards(Card a) {
 
+        for (int i = 0; i < Deck.displayed.size(); i++) {
+
+            if (Deck.displayed.get(i).getIcon() == a.getIcon()) {
+                this.remove(JPanelList.get(i));
+                this.repaint();
+            }
+        }
+    }//removeCards
+    
+    public void setBorder(ArrayList<Card> cards) {
+
+        for (int i = 0; i < Deck.displayed.size(); i++) {
+            if (Deck.displayed.get(i).getIcon() == cards.get(i).getIcon()) {
+                JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+            }
+        }
+    }//setBorder
+    
     public void showCards() throws InterruptedException {
-        for (int i = 0; i < JPanelList.size(); i++) {
-            this.remove(JPanelList.get(i));
-        }
-        createJPanels();
+       
+    		for(int i=0; i<JPanelList.size();i++){
+                this.remove(JPanelList.get(i));
+    		}
+    	
+    	//Karten werden erstellt 
+        this.createJPanels();
+        
+        //Koordinaten der X und Y Achsen werden initialisert
         x_Achse = 5;
         y_Achse = 5;
+        
         for (int i = 0; i < Deck.displayed.size(); i++) {
             //i < 4 1.Zeile
             size = Deck.displayed.size() / 3;
@@ -167,58 +196,66 @@ public class Design extends JFrame implements Runnable {
                     break;
             }
 
-            x_Achse += 130;														//#6
+            x_Achse += 130;//#6
 
             //Add components into Frame    
             this.setJMenuBar(menuBar);
             this.add(JPanelList.get(i));
+            
 
         }//for(int i;...;...) closing
         this.setSize(x_Achse + 15, this.getHeight());   //Hier wird der JFrame noch einmal je nach Bedarf gezeichnet
         this.validate();
         this.repaint();
 
-        Design.this.setEnabled(false);
-
-    }//Method closing
-
+        this.setEnabled(false);
+    }//showCards
+    
+    public void setPlayer(Player obj){
+        player = obj;
+        
+        if(player != null) {
+        	this.setEnabled(true);
+        }
+       this.setSETButtonVisible(obj, false);
+        
+    }//setPlayer
+    
+    public void setJFrame() {
+        this.setLayout(null);
+        this.setFocusable(true);
+        this.getContentPane().setBackground(new Color(0,130,0));
+        this.setUndecorated(true);
+        this.setVisible(true);
+        this.setSize(700, 725);									
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(true);				
+        this.setLocationRelativeTo(null);
+        this.setFocusable(true);
+    }//setJFrame
+    
     public void setXAchseDefault() {
         x_Achse = 5;
-    }
+    }//setXAchseDefault
 
-    public void setPlayer(Player obj) {
-        player = obj;
-
-        if (player != null) {
-            this.setEnabled(true);
-        } else {
-            this.setEnabled(false);
+    public void setSETButtonVisible(boolean status) {
+    	for(int i = 0; i<playerList.size();i++) {
+        	playerList.get(i).set.setEnabled(status);
         }
-
-    }
-
-    public void setComputer() {
-        computer = true;
-        if (computer != false) {
-            this.setEnabled(true);
+    }//setSetButtonVisible 
+    
+    public void setSETButtonVisible(Player player, boolean status) {
+    	for(int i = 0; i<playerList.size();i++) {
+        	if(playerList.get(i) != player) {
+        		playerList.get(i).set.setEnabled(status);
+        	}
         }
-    }
-
-    public static Player getPlayer() {
-        return player;
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                Date d = new Date();
-                this.setTitle(d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds());
-            } catch (Exception e) {
-            }
-
-        }
-    }
+    }//setSetButtonVisible 
+    
+    public void setPlayerList(ArrayList<Player> playerList) {
+    	this.playerList = playerList;
+    }//setPlayerList
+   
 
 ///Innere Klassen, Listener	
     private class MausListener implements MouseListener {
@@ -229,90 +266,53 @@ public class Design extends JFrame implements Runnable {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-
             st = new StringTokenizer(e.getComponent().getName(), " ");
 
-            //cards.add((MyJPanels) e.getComponent());
             while (st.hasMoreTokens()) {
                 try {
                     int a = Integer.parseInt(st.nextToken());
 
                     if (JPanelList.get(a).getBorder() != null) {
                         JPanelList.get(a).setBorder(null);
-                        clicked.remove(Deck.displayed.get(a));
+                        clickedList.remove(Deck.displayed.get(a));
                     } else {
                         JPanelList.get(a).setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
-                        clicked.add(Deck.displayed.get(a));
+                        clickedList.add(Deck.displayed.get(a));
                     }
 
-                    if (clicked.size() == 3) {
+                    if (clickedList.size() == 3) {
 
-                        if (Deck.isSet(clicked.get(0), clicked.get(1), clicked.get(2))) {
+                        if (Deck.isSet(clickedList.get(0), clickedList.get(1), clickedList.get(2))) {
                             JOptionPane.showMessageDialog(null, "Congratulations! This is a Set");
-                            Deck.replaceCards(clicked);
+                            Deck.replaceCards(clickedList);
+                            showCards();
                             player.scoreIncrease();
+                            setSETButtonVisible(true);
                         } else {
                             JOptionPane.showMessageDialog(null, "That isn't a Set!");
+                            showCards();
                             player.scoreDecrease();
+                            setSETButtonVisible(true);
                         }
-                        player = null;
-                        clicked.clear(); //Karten werden gelÃ¶scht
-                        showCards();
+                        Design.this.setEnabled(false);					//Karten klick nicht erlaubt
+                        clickedList.clear(); //Karten werden gelöscht
+                        System.out.println(player.getScore());
                     }//if closing
-                } catch (NumberFormatException | HeadlessException ex) {
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+                } catch (NumberFormatException | HeadlessException ex) {} 
+                  catch (InterruptedException ex) {}
+            }//while
         }
 
         @Override
-        public void mouseEntered(MouseEvent e) {
-        }
-
+        public void mouseEntered(MouseEvent e) {}
         @Override
-        public void mouseExited(MouseEvent e) {
-        }
-
+        public void mouseExited(MouseEvent e) {}
         @Override
-        public void mousePressed(MouseEvent e) {
-        }
-
+        public void mousePressed(MouseEvent e) {}
         @Override
-        public void mouseReleased(MouseEvent e) {
-        }
+        public void mouseReleased(MouseEvent e) {}
 
-    }
-
-    public void setTime() {
-        Thread t = new Thread(this);
-        t.start();
-    }
-
-    public void removeCards(Card a) {
-
-        for (int i = 0; i < Deck.displayed.size(); i++) {
-
-            if (Deck.displayed.get(i).getIcon() == a.getIcon()) {
-                this.remove(JPanelList.get(i));
-                this.repaint();
-            }
-
-        }
-        //        this.remove();
-        //        this.repaint();
-    }
-
-    public void setBorder(ArrayList<Card> cards) {
-
-        for (int i = 0; i < Deck.displayed.size(); i++) {
-            for (int j = 0; j < 3; j++) {
-                if (Deck.displayed.get(i) == cards.get(j)) {
-                    JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
-                }
-            }
-        }
-    }
+    }//MausListener
 
     private class MenuBarListener implements ActionListener {
 
@@ -326,24 +326,26 @@ public class Design extends JFrame implements Runnable {
                     try {
                         Game.saveGame(String.valueOf(fileChooser.getSelectedFile()));
                         // save to file
-                    } catch (IOException ex) {
-                        System.out.println(ex.getMessage());
-                    }
-                } //Listens to Sub-Menu "Load"
-            } else if (e.getSource() == menuItemFileLoad) {
-                fileChooser = new JFileChooser();
-                if (fileChooser.showOpenDialog(fileChooser) == JFileChooser.APPROVE_OPTION) {
-                    try {
-                        Game.loadGame(String.valueOf(fileChooser.getSelectedFile()));
-                        // save to file
-                    } catch (IOException | ClassNotFoundException | InterruptedException ex) {
-                        Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {}
+                } 
+                
+                //Listens to Sub-Menu "Load"
+                else if (e.getSource() == menuItemFileLoad) {
+                    fileChooser = new JFileChooser();
+                    if (fileChooser.showOpenDialog(fileChooser) == JFileChooser.APPROVE_OPTION) {
+                        try {
+                            Game.loadGame(String.valueOf(fileChooser.getSelectedFile()));
+                        } catch (IOException | ClassNotFoundException ex) {} 
+                        catch (InterruptedException ex) {}
                     }
                 }
-            } //Listens to Sub-Menu "Exit"
-            else if (e.getSource() == menuItemFileExit) {
-                System.exit(0);
-            } //Listens to Sub-Menu "Help-ShowManual"
+                
+                //Listens to Sub-Menu "Exit"
+                else if (e.getSource() == menuItemFileExit) {
+                	System.out.println(e.getSource());
+                    System.exit(0);
+                } 
+            }
         }
-    }
-}
+    }//MenuBarListener
+}//Design

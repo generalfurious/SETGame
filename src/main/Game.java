@@ -15,6 +15,7 @@ public class Game {
     static ArrayList<Player> playerList = new ArrayList<>();
     static ArrayList<Integer> savePlayer;
     static ArrayList<Integer> winnersList;
+    
     static int score;
     static int scorepl1, scorepl2, scorepl3, scorepl4, player, i;
     static Design design;
@@ -34,6 +35,8 @@ public class Game {
         for (int i = 1; i <= players; i++) {
             playerList.add(new Player(i, design));
         }
+        design.setPlayerList(playerList);
+        
     }
 
     public static void endGame() {
