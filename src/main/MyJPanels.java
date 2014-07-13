@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package main;
 
 import java.awt.BorderLayout;
@@ -14,95 +8,196 @@ import java.awt.Graphics2D;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Asus
- */
-class MyJPanels extends JPanel {
-        
-        private String name;
-        private int counter = 0;
-                
-        
-        public MyJPanels(String name) {
-           // setLayout(new BorderLayout());
-            setBackground(Color.WHITE);
-            setPreferredSize(new Dimension(100,50));
-            this.name = name;
-        }
-        
-        protected void paintComponent(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g;
-            super.paintComponent(g2);
-              g2.setColor(Color.WHITE);
-              g2.fillRoundRect(5, 10, 115, 230, 30, 30);
-             
-        }
-        
-        public String getName(){
-            return this.name;
-        }    
 
-        //Ãœberladene Methoden
-        public void setInto(JLabel label) {
-             
-                this.setLayout(new BorderLayout());
-                this.add(label,BorderLayout.CENTER);
-                this.validate();
-        }
+public class MyJPanels extends JPanel {
         
-        public void setInto(JLabel label, int number, Card card) {
-            
-        	int pos_x_axis = (int) Math.sqrt(Design.PANEL_WIDTH) /3;				//X-Achse
-        	int pos_y_axis_upper_area =  Design.PANEL_HEIGHT / 4;
-        	int pos_y_axis_lower_area =  (Design.PANEL_HEIGHT / 2) + (pos_y_axis_upper_area/2);
-        	
-        	if(card.getSymbol().equals("Hexagon")) {
-        		
-        	}
-        	else if(card.getSymbol().equals("Oval")) {
-        		if(number == 2) {
-        			pos_y_axis_upper_area    = Design.PANEL_HEIGHT / 4;
-                    pos_y_axis_lower_area    = (Design.PANEL_HEIGHT / 2) + (pos_y_axis_upper_area/2);
-        		}
-        		else if(number == 3) {
-        			pos_y_axis_upper_area    = Design.PANEL_HEIGHT / 4;
-                    pos_y_axis_lower_area    = (Design.PANEL_HEIGHT / 2) + (pos_y_axis_upper_area/2);
-        		}
-            }
-        	else if(card.getSymbol().equals("Rectangle")) {
-        		
-        	}
-        	else if(card.getSymbol().equals("Wave")) {}
-        	else if(card.getSymbol().equals("Heart")) {}
-        	else {}
-        	
-           
-            this.counter+=1;												//
-            
-            if (number == 2) {
+	private static final long serialVersionUID = 1L;
+	
+	private String name;
+	private int counter = 0;
                 
-                if (this.counter == 1) {
-                    
-                	this.setLayout(null);
-                    label.setSize((Card.average_width) ,(Card.max_height));
-                    label.setLocation(pos_x_axis, pos_y_axis_upper_area);     
-                    this.add(label);
-                    this.validate();                    
-                   
-                } else if (this.counter == 2) {
-                    label.setSize((Card.average_width) ,(Card.max_height));                     
-                    label.setLocation(pos_x_axis,pos_y_axis_lower_area);
-                    this.add(label);
-                    this.validate();
-                }
-            } else if(number == 3) {
-            	
-                //this.setLayout(new BorderLayout());
-                this.add(label, BorderLayout.CENTER);
-            }
-            
-            
-        }
+	
+	public MyJPanels(String name) {
+        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(100,50));
+        this.name = name;
     }
     
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        super.paintComponent(g2);
+        g2.setColor(Color.WHITE);
+//        g2.drawRoundRect(5, 2, 120, 225, 50, 50);
+//        g2.fillRoundRect(5, 2, 120, 225, 50, 50);
+       	
+    }
+    
+    public String getName(){
+        return this.name;
+    }    
+
+    //Überladene Methoden
+    public void setInto(JLabel label) {
+         
+        this.setLayout(new BorderLayout());
+        this.add(label,BorderLayout.CENTER);
+        this.validate();
+    }
+        
+    public void setInto(JLabel label, int number, Card card) {
+        
+    	int pos_x_axis = (int) Math.sqrt(Design.PANEL_WIDTH) /3;				//X-Achsen Koordiante
+    	int pos_y_axis =  Design.PANEL_HEIGHT / 4;								//Y-Achsen Koordinate
+    	
+    	this.counter+=1;
+    	
+    	if(card.getSymbol().equals("Hexagon")) {
+    		Card.height = 68;
+    		
+    		if(number == 2) {							//2 Zeilen bzw. 2 Labels sollen angezeigt werden
+    			if(this.counter == 1) {
+    				this.setLayout(null);
+    			}
+    			else if(this.counter == 2) {
+    				pos_y_axis+=Card.height;
+    			}
+    		}
+    		else{
+    		}															
+    	}//H E X A G O N
+    	
+    	else if(card.getSymbol().equals("Oval")) {
+    		Card.height = 42;
+    		pos_x_axis +=10;
+    		
+    		if(number == 2) {
+    			if(this.counter == 1) {
+    				this.setLayout(null);
+    				pos_y_axis+=25;
+    			}
+    			else if(this.counter == 2) {
+    				pos_y_axis+=65;
+    			}
+    		}
+    		else {
+    			if(this.counter == 1) {
+    				this.setLayout(null);
+    				pos_y_axis+=5;
+    			}
+    			else if(this.counter == 2) {
+    				pos_y_axis+=Card.height+5;
+    			}
+    			else {
+    				pos_y_axis +=Card.height+45;
+    			}
+    		}
+        }//O V A L
+
+    	else if(card.getSymbol().equals("Rectangle")) {
+    		Card.height = 35;
+    		pos_x_axis +=10;
+    		if(number == 2) {
+    			if(this.counter == 1) {
+    				this.setLayout(null);
+    				pos_y_axis+=25;
+    			}
+    			else if(this.counter == 2) {
+    				pos_y_axis+=(Card.height+30);
+    			}
+    		}
+    		else {
+    			if(this.counter == 1) {
+    				this.setLayout(null);
+    				pos_y_axis+=5;
+    			}
+    			else if(this.counter == 2) {
+    				pos_y_axis+=(Card.height+8);
+    			}
+    			else if(this.counter == 3) {
+    				pos_y_axis+=(Card.height*2+11);
+    			}
+    		}
+    	}//RECTANGLE
+    	
+    	else if(card.getSymbol().equals("Wave")) {
+    		pos_x_axis+=8;
+    		Card.height = 58;
+    		if(number == 2) {
+    			if(this.counter == 1) {
+    				this.setLayout(null);
+    				pos_y_axis+=10;
+    			}
+    			else if(this.counter == 2) {
+    				pos_y_axis+=65;
+    			}
+    		}
+    		else {
+    			if(this.counter == 1) {
+    				this.setLayout(null);
+    				pos_y_axis=20;
+    			}
+    			else if(this.counter == 2) {
+    				pos_y_axis+=20;
+    			}
+    			else {
+    				pos_y_axis +=Card.height+22;
+    			}
+    		}
+    	}//W A V E
+    	
+    	else if(card.getSymbol().equals("Heart")) {
+    		Card.height = 60;
+    		pos_x_axis+=8;
+    		//2 labels
+    		if(number == 2) {
+    			if(this.counter == 1) {
+    				this.setLayout(null);
+    				pos_y_axis+=5;
+    			}
+    			else if(this.counter == 2) {
+    				pos_y_axis+=Card.height+15;
+    			}
+    		}
+    		//3 labels
+    		else {
+    			if(this.counter == 1) {
+    				this.setLayout(null);
+    				pos_y_axis = 18;
+    			}
+    			else if(this.counter == 2) {
+    				pos_y_axis += 30;
+    			}
+    			else {
+    				pos_y_axis += Card.height+35;
+    			}
+    		}
+    	}//H E A R T
+    	
+    	else if(card.getSymbol().equals("Star")){
+    		Card.height = 75;
+    		pos_x_axis+=8;
+    		if(number == 2) {
+    			if(this.counter == 1) {
+    				this.setLayout(null);
+    				pos_y_axis-=10;
+    			}
+    			else if(this.counter == 2) {
+    				pos_y_axis+= Card.height-10;
+    			}
+    		}
+    		else if(number == 3) {
+   			 	this.add(label, BorderLayout.CENTER);
+    		}
+    	}//S T A R
+    	
+    		label.setSize((Card.average_width) ,(Card.height));
+	        label.setLocation(pos_x_axis, pos_y_axis);     
+	        this.add(label);
+	        this.validate(); 
+    	
+	                           
+    	//System.out.println("Number: " +number +", Counter: " +this.counter +", Symbol: " +card.getSymbol() +" " +card.getShade() +", Y-Achse: " +label.getY());
+        
+    }
+}
+
