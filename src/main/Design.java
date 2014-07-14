@@ -1,15 +1,5 @@
 package main;
 
-/*
- * Author: Ramazan Cinardere
- */
-/**
- * K O M M E N T A R E (#...)
- *
- * #1: #2:
- *
- *
- */
 
 
 import java.awt.Color;
@@ -48,7 +38,8 @@ public class Design extends JFrame {
     public ArrayList<Card> clickedList     = new ArrayList<>();
     public ArrayList<Player> playerList    = new ArrayList<>();
     public JFileChooser fileChooser 	   = null;
-    public Player player 		   		   = null;
+    public static Player player    = null;
+    boolean computer = false;
 
     public static final int PANEL_WIDTH  = 125;
     public static final int PANEL_HEIGHT = 230;
@@ -139,13 +130,15 @@ public class Design extends JFrame {
     }//removeCards
     
     public void setBorder(ArrayList<Card> cards) {
-
+        
         for (int i = 0; i < Deck.displayed.size(); i++) {
-            if (Deck.displayed.get(i).getIcon() == cards.get(i).getIcon()) {
-                JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+            for(int j=0;j<3;j++){
+                if (Deck.displayed.get(i) == cards.get(j)) {
+                    JPanelList.get(i).setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
+                }
             }
         }
-    }//setBorder
+    }
     
     public void showCards() throws InterruptedException {
        
@@ -216,10 +209,22 @@ public class Design extends JFrame {
         
         if(player != null) {
         	this.setEnabled(true);
+                this.setSETButtonVisible(obj, false);
+
         }
-       this.setSETButtonVisible(obj, false);
         
     }//setPlayer
+    
+    public void setComputer() {
+        computer = true;
+        if (computer != false) {
+            this.setEnabled(true);
+        }
+    }
+
+    public static Player getPlayer() {
+        return player;
+    }
     
     public void setJFrame() {
         this.setLayout(null);
@@ -294,9 +299,9 @@ public class Design extends JFrame {
                             player.scoreDecrease();
                             setSETButtonVisible(true);
                         }
+                        setPlayer(null);
                         Design.this.setEnabled(false);					//Karten klick nicht erlaubt
                         clickedList.clear(); //Karten werden gelöscht
-                        System.out.println(player.getScore());
                     }//if closing
                 } catch (NumberFormatException | HeadlessException ex) {} 
                   catch (InterruptedException ex) {}
@@ -327,7 +332,8 @@ public class Design extends JFrame {
                         Game.saveGame(String.valueOf(fileChooser.getSelectedFile()));
                         // save to file
                     } catch (IOException ex) {}
-                } 
+                }
+            }
                 
                 //Listens to Sub-Menu "Load"
                 else if (e.getSource() == menuItemFileLoad) {
@@ -346,6 +352,5 @@ public class Design extends JFrame {
                     System.exit(0);
                 } 
             }
-        }
     }//MenuBarListener
 }//Design

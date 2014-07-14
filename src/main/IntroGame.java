@@ -426,7 +426,7 @@ public class IntroGame extends javax.swing.JFrame {
             if (color.size() != 3 || symbol.size() != 3) {
                 color.clear();
                 symbol.clear();
-                JOptionPane.showMessageDialog(null, "Please choose 3 colors and 3 symbols or only 1 color.");
+                JOptionPane.showMessageDialog(null, "Please choose 3 symbols and three or one color.");
             } else {
 
                 try {

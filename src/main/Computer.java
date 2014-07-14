@@ -6,21 +6,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class Computer extends Thread {
+public class Computer extends Thread { // Class for the computer function, inherits Thread Class
 
-    int min, max;
-    static int score, difficulty;
+    int min, max; // will be used in the random function
+    static int score, difficulty; 
     Design design;
 
     Computer(String difficulty, Design obj) {
         design = obj;
         if (difficulty.equals("easy")) {
-            min = 20000;
-            max = 40000;
+            min = 20000; // 20 seconds
+            max = 40000; // 40 seconds
             this.difficulty = 1;
         } else if (difficulty.equals("normal")) {
-            min = 10000;
-            max = 20000;
+            min = 10000; // 10 seconds
+            max = 20000; // 20 seconds
             this.difficulty = 2;
         }
     }
@@ -29,15 +29,17 @@ public class Computer extends Thread {
         while (true) {
             try {
                 int random = new Random().nextInt(max - min) + min;
-                sleep(random);
+                sleep(2000); // wait until a random time with min<= time <=max
                 if(design.getPlayer() == null){
-                    ArrayList<Card> found = Deck.findSet();
+                    ArrayList<Card> found = Deck.findSet(); 
                     JOptionPane.showMessageDialog(null,"The Computer has found a Set!");
-                    design.setComputer();
-                    design.setBorder(found);
-                    score++;
-                    sleep(3000);
+                    design.setComputer(); // tell the design class that a computer now needs access to the cards
+                    design.setBorder(found); // show the set
+                    design.setSETButtonVisible(false); // disable SET-Button of the player
+                    score++; 
+                    sleep(3000); //wait 3 seconds
                     Deck.replaceCards(found);
+                    design.setSETButtonVisible(true); // enable the SET-Buton of the player
                     design.showCards();
                 }
             } catch (InterruptedException ex) {
@@ -54,10 +56,8 @@ public class Computer extends Thread {
         return difficulty;
     }
 
-    public static void setScore(int score) {
+    public static void setScore(int score) { // used for the loadGame() function
         Computer.score = score;
     }
-    
-    
     
 }

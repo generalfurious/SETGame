@@ -3,35 +3,23 @@ package main;
 
 import java.io.Serializable;
 
-public class Card implements Serializable{
+public class Card implements Serializable{ // Class for the card-objects, Serializable for the saveGame() function
     String number, shade, symbol, color, icon;
     
-    public static final int average_width = 105;
-    public static final int max_height = 75;
+    public static final int average_width = 105; // y-Position of the labels
+    public static int height; // x-Position of the labels
     
     public Card(int number, int shade, String symbol, String color){
-        this.number = whatNumber(number);
+        this.number = String.valueOf(number);
         this.symbol = symbol;
-        this.shade = whatShade(shade);
+        this.shade = whatShade(shade); 
         this.color = color;
         this.icon = "Card_Symbols\\" + this.color + "\\" + this.symbol +  "_" + this.color + "_" + this.shade + ".png";  
+        //Creation of the icon path with the help of the attributes
                     
     }
-    
-    public String whatNumber(int number){
-        return String.valueOf(number);
-    }
-    
-//    public String whatSymbol(int symbol){
-//        switch(symbol){
-//                case 1: return "hexagon";
-//                case 2: return "rectangle";
-//                case 3: return "wave";
-//        }
-//        return "0";
-//    }
-//    
-    public String whatShade(int shade){
+
+    public String whatShade(int shade){ // What shade does the number imply?
         switch(shade){
                 case 1: return "full";
                 case 2: return "half";
@@ -40,14 +28,6 @@ public class Card implements Serializable{
         return "0";
     }
     
-//     public String whatColor(int color){
-//        switch(color){
-//                case 1: return "red";
-//                case 2: return "blue";
-//                case 3: return "purple";
-//        }
-//        return "none";
-//    }
 
     public String getNumber() {
         return number;
@@ -68,8 +48,4 @@ public class Card implements Serializable{
     public String getIcon() {
         return icon;
     }
-    
-     
-     
-     
 }    
