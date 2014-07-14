@@ -194,10 +194,7 @@ public class MyJPanels extends JPanel {
 	        label.setLocation(pos_x_axis, pos_y_axis);     
 	        this.add(label);
 	        this.validate(); 
-    	
 	                           
-    	//System.out.println("Number: " +number +", Counter: " +this.counter +", Symbol: " +card.getSymbol() +" " +card.getShade() +", Y-Achse: " +label.getY());
-        
     }
 }
 

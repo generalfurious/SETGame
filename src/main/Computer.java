@@ -29,7 +29,7 @@ public class Computer extends Thread { // Class for the computer function, inher
         while (true) {
             try {
                 int random = new Random().nextInt(max - min) + min;
-                sleep(2000); // wait until a random time with min<= time <=max
+                sleep(random); // wait until a random time with min<= time <=max
                 if(design.getPlayer() == null){
                     ArrayList<Card> found = Deck.findSet(); 
                     JOptionPane.showMessageDialog(null,"The Computer has found a Set!");

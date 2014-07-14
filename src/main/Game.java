@@ -43,7 +43,6 @@ public class Game { //Game is responsible for the initialization of all function
     }
 
     public static void endGame() {
-
         winnersList = new ArrayList<>();
         winners = new ArrayList<>();
 
@@ -89,7 +88,6 @@ public class Game { //Game is responsible for the initialization of all function
         if (computer != null && max == Computer.getScore()) {
             winners.add("computer");
         }
-
         if (winners.size() == 1) {
             if (winners.get(0).equals("computer")) {
                 JOptionPane.showMessageDialog(null, "The computer has won with " + Computer.getScore() + " SETs.");
@@ -142,6 +140,9 @@ public class Game { //Game is responsible for the initialization of all function
         FileInputStream fis = new FileInputStream(filePath);
         ObjectInputStream ois = new ObjectInputStream(fis);
         ArrayList<ArrayList> list = (ArrayList<ArrayList>) ois.readObject();
+        new Deck();
+        design = new Design();
+        playerList = new ArrayList<>();
         Deck.setDeck(list.get(0));
         Deck.setDisplayed(list.get(1));
         savePlayer = list.get(2);
@@ -149,13 +150,15 @@ public class Game { //Game is responsible for the initialization of all function
             p.closeWindows();
         }
         playerList.clear();
-        design.setPlayer(null);
+//        design.setPlayer(null);
         for (int i = 0; i < savePlayer.size(); i++) {
             if (savePlayer.get(i) == 1000) { // If it is a computer
                 if (savePlayer.get(i + 2) == 1) { // if difficulty is 1(easy)
-                    new Computer("easy", design).start();
+                    computer = new Computer("easy", design);
+                    computer.start();
                 } else if (savePlayer.get(i + 2) == 2) { // if difficulty is 2(normal)
-                    new Computer("normal", design).start();
+                    computer = new Computer("normal", design);
+                    computer.start();
                 }
                 Computer.setScore(savePlayer.get(i + 1));
                 break;  // no more players

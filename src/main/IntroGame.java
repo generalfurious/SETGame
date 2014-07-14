@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 
 public class IntroGame extends javax.swing.JFrame {
 
-    //f
     String a = null;
     ArrayList<String> color = new ArrayList<>();
     ArrayList<String> symbol = new ArrayList<>();
@@ -30,7 +29,7 @@ public class IntroGame extends javax.swing.JFrame {
     int players, player;
 
     JFileChooser fileChooser = null;
-    
+
     //Menubar reference variables declaration
     JMenuBar menuBar = null;
     JMenu menuFile = null;
@@ -39,9 +38,7 @@ public class IntroGame extends javax.swing.JFrame {
     JMenuItem menuItemFileLoad = null;
     JMenuItem menuItemFileSave = null;
     JMenuItem menuItemFileExit = null;
-    
-    
-    
+
     ButtonGroup group = new ButtonGroup();
     ButtonGroup against = new ButtonGroup();
 
@@ -54,7 +51,7 @@ public class IntroGame extends javax.swing.JFrame {
         against.add(jRadioPlayer);
         jLabelBild.setIcon(new ImageIcon("src/main/SET_logo.png"));
         jRadioPlayer.setSelected(true);
-        
+
         ///MenÃ¼leiste
         menuBar = new JMenuBar();
         //HinzufÃ¼gen von MenÃ¼s
@@ -77,15 +74,9 @@ public class IntroGame extends javax.swing.JFrame {
         menuFile.add(menuItemFileSave);
         menuFile.add(menuItemFileLoad);
         menuFile.add(menuItemFileExit);
-        
+
         this.setJMenuBar(menuBar);
-        
-        
-        
-        
-        
-        
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -430,43 +421,43 @@ public class IntroGame extends javax.swing.JFrame {
 
     public void oneColorCheck() {
         symbolCheck();
-        if(symbol.size() == 3){
-        checkcolor = (String) jComboColor.getSelectedItem();
-        color.clear();
-        color.add(checkcolor);
+        if (symbol.size() == 3) {
+            checkcolor = (String) jComboColor.getSelectedItem();
+            color.clear();
+            color.add(checkcolor);
 
-        try {
-            // Player vs. Player oder Computer
-            if (jRadioPlayer.isSelected()) {
-                player = jComboPlayers.getSelectedIndex();
-                players = getPlayer(player);
-                new Game(symbol, color, players);
-                // dispose();
-            } else {
-                if (!(jRadioEasy.isSelected()) && !(jRadioNormal.isSelected())) {
-                    JOptionPane.showMessageDialog(null, "Please choose a difficulty");
+            try {
+                // Player vs. Player oder Computer
+                if (jRadioPlayer.isSelected()) {
+                    player = jComboPlayers.getSelectedIndex();
+                    players = getPlayer(player);
+                    new Game(symbol, color, players);
+                    // dispose();
                 } else {
-
-                    if (jRadioEasy.isSelected()) {
-                        new Game(symbol, color, easy);
-                        dispose();
+                    if (!(jRadioEasy.isSelected()) && !(jRadioNormal.isSelected())) {
+                        JOptionPane.showMessageDialog(null, "Please choose a difficulty");
                     } else {
-                        new Game(symbol, color, normal);
-                        dispose();
+
+                        if (jRadioEasy.isSelected()) {
+                            new Game(symbol, color, easy);
+                            dispose();
+                        } else {
+                            new Game(symbol, color, normal);
+                            dispose();
+
+                        }
 
                     }
-
                 }
-            }
 
-        } catch (RemoteException | InterruptedException ex) {
-            Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }else{
-        JOptionPane.showMessageDialog(null, "Please choose 3 colors and 3 symbols or only 1 color.");
-        symbol.clear();
+            } catch (RemoteException | InterruptedException ex) {
+                Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException | ClassNotFoundException ex) {
+                Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please choose 3 colors and 3 symbols or only 1 color.");
+            symbol.clear();
         }
     }
     private void jButtonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPlayActionPerformed
@@ -511,8 +502,8 @@ public class IntroGame extends javax.swing.JFrame {
                     Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        }else{
-        oneColorCheck();
+        } else {
+            oneColorCheck();
         }
     }//GEN-LAST:event_jButtonPlayActionPerformed
 
@@ -581,31 +572,26 @@ public class IntroGame extends javax.swing.JFrame {
                         Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } //Listens to Sub-Menu "Load"
-                else if (e.getSource() == menuItemFileLoad) {
-                    System.out.println("load");
-                    fileChooser = new JFileChooser();
-                    if (fileChooser.showOpenDialog(fileChooser) == JFileChooser.APPROVE_OPTION) {
-                        try {
-                            Game.loadGame(String.valueOf(fileChooser.getSelectedFile()));
-                            // save to file
-                        } catch (IOException | ClassNotFoundException ex) {
-                            Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+            } else if (e.getSource() == menuItemFileLoad) {
+                fileChooser = new JFileChooser();
+                if (fileChooser.showOpenDialog(fileChooser) == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        Game.loadGame(String.valueOf(fileChooser.getSelectedFile()));
+                        // save to file
+                    } catch (IOException | ClassNotFoundException ex) {
+                        Logger.getLogger(Design.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(IntroGame.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } //Listens to Sub-Menu "Exit"
-                else if (e.getSource() == menuItemFileExit) {
-                    System.exit(0);
-                } //Listens to Sub-Menu "Help-ShowManual"
-            }
+                }
+            } //Listens to Sub-Menu "Exit"
+            else if (e.getSource() == menuItemFileExit) {
+                System.exit(0);
+            } //Listens to Sub-Menu "Help-ShowManual"
         }
-
-        
     }
 
-    
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;

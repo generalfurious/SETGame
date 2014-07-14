@@ -288,13 +288,13 @@ public class Design extends JFrame {
                     if (clickedList.size() == 3) {
 
                         if (Deck.isSet(clickedList.get(0), clickedList.get(1), clickedList.get(2))) {
-                            JOptionPane.showMessageDialog(null, "Congratulations! This is a Set");
+                            JOptionPane.showMessageDialog(null, "Set found!");
                             Deck.replaceCards(clickedList);
                             showCards();
                             player.scoreIncrease();
                             setSETButtonVisible(true);
                         } else {
-                            JOptionPane.showMessageDialog(null, "That isn't a Set!");
+                            JOptionPane.showMessageDialog(null, "This isn't a Set!");
                             showCards();
                             player.scoreDecrease();
                             setSETButtonVisible(true);
@@ -348,7 +348,6 @@ public class Design extends JFrame {
                 
                 //Listens to Sub-Menu "Exit"
                 else if (e.getSource() == menuItemFileExit) {
-                	System.out.println(e.getSource());
                     System.exit(0);
                 } 
             }

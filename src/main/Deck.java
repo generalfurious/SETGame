@@ -10,6 +10,12 @@ public class Deck { // Responsible for the deck of cards and the cards which are
     static ArrayList<String> symbol, color;
     static int random;
 
+    public Deck() {
+        deck = new ArrayList<>();
+        displayed = new ArrayList<>();
+    }
+
+    
     public Deck(ArrayList<String> symbol, ArrayList<String> color) {
         deck = new ArrayList<>();
         displayed = new ArrayList<>();
@@ -91,7 +97,7 @@ public class Deck { // Responsible for the deck of cards and the cards which are
 
     public static void addCards(int number) { // Add Cards to the displayed deck
         if (!deck.isEmpty()) { // if there are still Cards in the deck
-            for (int i = 0; i < number; i++) { 
+            for (int i = 0; i < number; i++) {
                 random = new Random().nextInt(deck.size()); // Create a random number with 0<number<deck.size()
                 displayed.add(deck.get(random));
                 deck.remove(random); // Take this card from the original deck
@@ -100,7 +106,7 @@ public class Deck { // Responsible for the deck of cards and the cards which are
     }
 
     public static void replaceCards(ArrayList<Card> remove) { //replaces three cards in displayed with three new cards from deck
-        if (!deck.isEmpty()) { 
+        if (!deck.isEmpty()) {
             if (displayed.size() == 12) {
                 for (int i = 0; i < displayed.size(); i++) {
                     for (Card oldCard : remove) {
@@ -112,12 +118,13 @@ public class Deck { // Responsible for the deck of cards and the cards which are
                     }
                 }
             } else {    // no more cards in deck
-                removeCards(remove); 
+                removeCards(remove);
             }
             fillDeck(); // for the case that no set is available
         }
-        if(displayed.isEmpty())
-            Game.endGame(); 
+        if (displayed.isEmpty()) {
+            Game.endGame();
+        }
     }
 
     public static void removeCards(ArrayList<Card> remove) { // remove cards from displayed
@@ -138,6 +145,14 @@ public class Deck { // Responsible for the deck of cards and the cards which are
 
     public static void setDisplayed(ArrayList<Card> displayed) { // used for the loadGame() function
         Deck.displayed = displayed;
+    }
+
+    public static ArrayList<Card> getDeck() {
+        return deck;
+    }
+
+    public static ArrayList<Card> getDisplayed() {
+        return displayed;
     }
 
 }
