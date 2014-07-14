@@ -6,9 +6,9 @@ import java.util.Random;
 public class Deck { // Responsible for the deck of cards and the cards which are displayed
 
     static ArrayList<Card> deck; // All 81 Cards
-    static ArrayList<Card> displayed; // The Cards that are shown
+    static ArrayList<Card> displayed; // The Cards that currently used
     static ArrayList<String> symbol, color;
-    static int random, size, players;
+    static int random;
 
     public Deck(ArrayList<String> symbol, ArrayList<String> color) {
         deck = new ArrayList<>();
@@ -25,12 +25,12 @@ public class Deck { // Responsible for the deck of cards and the cards which are
         for (int i = 1; i <= 3; i++) {
             for (int j = 1; j <= 3; j++) {
                 for (String symbolx : Deck.symbol) {
-                    if (color.size() != 1) {
+                    if (color.size() != 1) { // player choses three colors
                         for (String colorx : Deck.color) {
                             deck.add(new Card(i, j, symbolx, colorx));
                         }
                     }//end of l (color) 
-                    else {
+                    else { // if the player only choses one color
                         deck.add(new Card(i, j, symbolx, Deck.color.get(0)));
                     }
                 }//end of k (symbol) 
@@ -43,7 +43,7 @@ public class Deck { // Responsible for the deck of cards and the cards which are
         for (Card a : displayed) {
             for (Card b : displayed) {
                 for (Card c : displayed) {
-                    if (a.equals(b) || a.equals(c) || b.equals(c)) {
+                    if (a.equals(b) || a.equals(c) || b.equals(c)) { // if a card is used by two loops then continue
                         continue;
                     }
                     if (isSet(a, b, c)) {
@@ -69,7 +69,7 @@ public class Deck { // Responsible for the deck of cards and the cards which are
         return false;
     }
 
-    public static ArrayList<Card> findSet() { // Returns the Set
+    public static ArrayList<Card> findSet() { // Returns a Set
         ArrayList<Card> found = new ArrayList<>();
         for (Card a : displayed) {
             for (Card b : displayed) {
@@ -90,17 +90,17 @@ public class Deck { // Responsible for the deck of cards and the cards which are
     }
 
     public static void addCards(int number) { // Add Cards to the displayed deck
-        if (!deck.isEmpty()) {
-            for (int i = 0; i < number; i++) { // At the beginning we add 12 Random Cards to this deck
-                random = new Random().nextInt(deck.size()); // Create a random number(0, size+1)
+        if (!deck.isEmpty()) { // if there are still Cards in the deck
+            for (int i = 0; i < number; i++) { 
+                random = new Random().nextInt(deck.size()); // Create a random number with 0<number<deck.size()
                 displayed.add(deck.get(random));
                 deck.remove(random); // Take this card from the original deck
             }
         }
     }
 
-    public static void replaceCards(ArrayList<Card> remove) { //Removes a Card
-        if (deck.size() != 0) {
+    public static void replaceCards(ArrayList<Card> remove) { //replaces three cards in displayed with three new cards from deck
+        if (!deck.isEmpty()) { 
             if (displayed.size() == 12) {
                 for (int i = 0; i < displayed.size(); i++) {
                     for (Card oldCard : remove) {
@@ -111,18 +111,16 @@ public class Deck { // Responsible for the deck of cards and the cards which are
                         }
                     }
                 }
-            } else {
-                removeCards(remove);
+            } else {    // no more cards in deck
+                removeCards(remove); 
             }
-            fillDeck();
-
+            fillDeck(); // for the case that no set is available
         }
-        if(displayed.size() == 0)
-            Game.endGame();
-        
+        if(displayed.isEmpty())
+            Game.endGame(); 
     }
 
-    public static void removeCards(ArrayList<Card> remove) {
+    public static void removeCards(ArrayList<Card> remove) { // remove cards from displayed
         for (Card old : remove) {
             displayed.remove(old);
         }
@@ -134,11 +132,11 @@ public class Deck { // Responsible for the deck of cards and the cards which are
         }
     }
 
-    public static void setDeck(ArrayList<Card> deck) {
+    public static void setDeck(ArrayList<Card> deck) { // used for the loadGame() function
         Deck.deck = deck;
     }
 
-    public static void setDisplayed(ArrayList<Card> displayed) {
+    public static void setDisplayed(ArrayList<Card> displayed) { // used for the loadGame() function
         Deck.displayed = displayed;
     }
 
