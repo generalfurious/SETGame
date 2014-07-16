@@ -3,53 +3,47 @@ package main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
 public class MyJPanels extends JPanel {
-        
+
+///Class ID	
 	private static final long serialVersionUID = 1L;
-	
-	private String name;
+
+///Class- Attributes	
+	private String name = null;
 	private int counter = 0;
-                
 	
+/// Constructor               
 	public MyJPanels(String name) {
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(100,50));
         this.name = name;
     }
     
-    protected void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        super.paintComponent(g2);
-        g2.setColor(Color.WHITE);
-//        g2.drawRoundRect(5, 2, 120, 225, 50, 50);
-//        g2.fillRoundRect(5, 2, 120, 225, 50, 50);
-       	
-    }
-    
+	//getter
     public String getName(){
         return this.name;
     }    
 
-    //Überladene Methoden
+    //Overloaded method
+    //Add one label into JPanel label includes one symbol
     public void setInto(JLabel label) {
-         
         this.setLayout(new BorderLayout());
         this.add(label,BorderLayout.CENTER);
         this.validate();
     }
-        
+    
+    //Overloaded Method
     public void setInto(JLabel label, int number, Card card) {
         
     	int pos_x_axis = (int) Math.sqrt(Design.PANEL_WIDTH) /3;				//X-Achsen Koordiante
     	int pos_y_axis =  Design.PANEL_HEIGHT / 4;								//Y-Achsen Koordinate
     	
-    	this.counter+=1;
+    	//counter == amount of labels or line number of respective symbol
+    	this.counter+=1;			
     	
     	if(card.getSymbol().equals("Hexagon")) {
     		Card.height = 68;
@@ -194,10 +188,6 @@ public class MyJPanels extends JPanel {
 	        label.setLocation(pos_x_axis, pos_y_axis);     
 	        this.add(label);
 	        this.validate(); 
-    	
-	                           
-    	//System.out.println("Number: " +number +", Counter: " +this.counter +", Symbol: " +card.getSymbol() +" " +card.getShade() +", Y-Achse: " +label.getY());
-        
     }
 }
 
