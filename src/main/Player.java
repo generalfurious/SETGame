@@ -105,7 +105,8 @@ public class Player extends JFrame implements Serializable {
         zahl.setText(String.valueOf(score));
     }
     public void scoreDecrease(){
-        score--;
+        if(score != 0)
+            score--;
         zahl.setText(String.valueOf(score));
     }
     
