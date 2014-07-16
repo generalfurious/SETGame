@@ -82,6 +82,7 @@ public class Player extends JFrame implements Serializable {
             window.setLocation(1000, 500);
         }
         window.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        window.setResizable(false);
 
     }
 
@@ -112,6 +113,7 @@ public class Player extends JFrame implements Serializable {
     
     public void closeWindows(){
         window.dispose();
+        System.out.println("Fenster loesch");
     }
     
     

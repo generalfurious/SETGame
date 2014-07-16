@@ -44,103 +44,97 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jCheckHexagon" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jCheckStar" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <Component id="jRadioEasy" min="-2" max="-2" attributes="0"/>
-                          <Component id="jRadioNormal" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckRectangle" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckOval" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jCheckWave" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckHeart" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jCheckHexagon" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jCheckStar" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jCheckRectangle" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jCheckOval" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jCheckWave" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jCheckHeart" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
+                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" pref="240" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                                          <Component id="jCheckGreen" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                                      <Component id="jCheckGreen" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Group type="103" groupAlignment="0" attributes="0">
-                                                              <Component id="jCheckYellow" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                              <Component id="jCheckRed" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                          <Group type="103" groupAlignment="0" attributes="0">
-                                                              <Component id="jCheckPurple" min="-2" max="-2" attributes="0"/>
-                                                              <Component id="jCheckBlue" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                      </Group>
-                                                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Group type="102" alignment="1" attributes="0">
-                                                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                          <Component id="jComboColor" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jCheckYellow" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jCheckRed" alignment="0" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jComboPlayers" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jCheckPurple" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jCheckBlue" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
-                                          <Component id="jLabelBild" min="-2" pref="283" max="-2" attributes="0"/>
+                                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="jComboColor" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                      <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
-                                      <Component id="jLabel1" min="-2" pref="240" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jComboPlayers" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jRadioEasy" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jRadioNormal" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="178" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabelBild" min="-2" pref="283" max="-2" attributes="0"/>
+                                  <EmptySpace pref="288" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="268" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                                      <Component id="jRadioComputer" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jRadioPlayer" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
-                                  </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="268" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Component id="jRadioComputer" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jRadioPlayer" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="33" pref="21" max="32767" attributes="0"/>
+              <EmptySpace min="33" pref="0" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -274,7 +268,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="10" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="(Please Choose 3 Colors)"/>
+        <Property name="text" type="java.lang.String" value="(Please choose 3 colors)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -320,7 +314,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="10" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="(Please Choose 3 Symbols)"/>
+        <Property name="text" type="java.lang.String" value="(Please choose 3 symbols)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
@@ -333,7 +327,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="10" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="(Please Choose one difficulty)"/>
+        <Property name="text" type="java.lang.String" value="(Please choose a difficulty)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboPlayers">

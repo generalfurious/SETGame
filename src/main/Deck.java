@@ -15,7 +15,6 @@ public class Deck { // Responsible for the deck of cards and the cards which are
         displayed = new ArrayList<>();
     }
 
-    
     public Deck(ArrayList<String> symbol, ArrayList<String> color) {
         deck = new ArrayList<>();
         displayed = new ArrayList<>();
@@ -92,16 +91,15 @@ public class Deck { // Responsible for the deck of cards and the cards which are
                 }
             }
         }
+        Game.endGame();
         return found;
     }
 
     public static void addCards(int number) { // Add Cards to the displayed deck
-        if (!deck.isEmpty()) { // if there are still Cards in the deck
-            for (int i = 0; i < number; i++) {
-                random = new Random().nextInt(deck.size()); // Create a random number with 0<number<deck.size()
-                displayed.add(deck.get(random));
-                deck.remove(random); // Take this card from the original deck
-            }
+        for (int i = 0; i < number; i++) {
+            random = new Random().nextInt(deck.size()); // Create a random number with 0<number<deck.size()
+            displayed.add(deck.get(random));
+            deck.remove(random); // Take this card from the original deck
         }
     }
 
@@ -117,14 +115,12 @@ public class Deck { // Responsible for the deck of cards and the cards which are
                         }
                     }
                 }
-            } else {    // no more cards in deck
-                removeCards(remove);
             }
-            fillDeck(); // for the case that no set is available
+        } else {    // no more cards in deck
+            removeCards(remove);
         }
-        if (displayed.isEmpty()) {
-            Game.endGame();
-        }
+        fillDeck(); // for the case that no set is available
+
     }
 
     public static void removeCards(ArrayList<Card> remove) { // remove cards from displayed
@@ -134,8 +130,13 @@ public class Deck { // Responsible for the deck of cards and the cards which are
     }
 
     public static void fillDeck() { // Fills the deck if there is no Set or if there are less than 12 Cards
-        while (!isSetAvailable() || displayed.size() < 12 && deck.size() >= 3) {
-            addCards(3);
+        if (!deck.isEmpty()) { // If there are still cards available
+            while (!isSetAvailable() || displayed.size() < 12 && deck.size() >= 3) {
+                addCards(3);
+            }
+        }
+        if (displayed.isEmpty()) {
+            Game.endGame();
         }
     }
 

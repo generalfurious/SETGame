@@ -142,13 +142,13 @@ public class Game { //Game is responsible for the initialization of all function
         ArrayList<ArrayList> list = (ArrayList<ArrayList>) ois.readObject();
         new Deck();
         design = new Design();
-        playerList = new ArrayList<>();
         Deck.setDeck(list.get(0));
         Deck.setDisplayed(list.get(1));
         savePlayer = list.get(2);
         for (Player p : playerList) {
             p.closeWindows();
         }
+        playerList = new ArrayList<>();
         playerList.clear();
 //        design.setPlayer(null);
         for (int i = 0; i < savePlayer.size(); i++) {
